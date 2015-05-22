@@ -6,3 +6,7 @@
 *.bbl
 
 ignore/
+
+!imene_figs/PIC_NBI1.pdf
+!imene_figs/PIC_NBI2.pdf
+!imene_figs/PIC_NTV.pdf
