@@ -53,7 +53,7 @@ three-dimensional applied magnetic fields as actuators.
 Based on the data-driven model obtained, a feedback controller is designed, and predictive simulations using the TRANSP plasma transport code show that the controller is able to attain desired plasma rotation profiles given practical constraints on the actuators and the availability of rotation sensors.
 \end{abstract}
 
-%\ioptwocol
+\ioptwocol
 
 %\maketitle
 
@@ -76,7 +76,7 @@ stable, transient processes including edge-localized modes, internal transport
 barriers, and different heating mechanisms can alter plasma profiles and make
 them less stable, or unstable \cite{Sabbagh13}.
 %
-Therefore, it is necessary to predict and control the rotation properties of
+It is necessary to predict and control the rotation properties of
 plasmas for future fusion power-producing tokamak operation (including ITER
 \cite{Hender07}) because disruptions caused by macroscopic instabilities in such
 devices can generate electromagnetic forces and heat loads large enough to
@@ -115,7 +115,7 @@ Using the work of Goldston \cite{Goldston86}  and Callen  \cite{Callen09}, the a
 \begin{eqnarray}
   \sum_i n_i m_i \left<R^2\right> \frac{\partial \omega}{\partial t}
   + \omega \left<R^2\right> \sum_i m_i \frac{\partial n_i}{\partial t} \nonumber \\
-  + \sum_i n_i m_i \omega \frac{\partial \left<R^2\right>}{\partial t}
+  + \sum_i n_i m_i \omega \frac{\partial \left<R^2\right>}{\partial t} \nonumber \\
   + \sum_i n_i m_i \left<R^2\right> \omega \left( \frac{\partial V}{\partial\rho}\right)^{-1} \frac{\partial}{\partial t} \frac{\partial V}{\partial \rho} \nonumber \\
   = \left( \frac{\partial V}{\partial\rho}\right)^{-1}\frac{\partial}{\partial \rho} \left[\frac{\partial V}{\partial \rho}\sum_i n_i m_i \chi_\phi \left< R^2 (\nabla \rho)^2\right> \frac{\partial\omega}{\partial\rho}\right] \nonumber \\
   - \left( \frac{\partial V}{\partial\rho}\right)^{-1}\frac{\partial}{\partial \rho} \left[\frac{\partial V}{\partial \rho}\sum_i n_i m_i \omega \left< R^2 (\nabla \rho)^2\right> \frac{v_\rho}{|\nabla\rho|}\right] \nonumber \\
@@ -175,7 +175,6 @@ Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ calculation from a parti
 \begin{figure}
 \centering
 \begin{tabular}{c}
-Shot no 133775 \\
  \includegraphics[width=\linewidth]{imene_figs/CHIPHI1n}
  \end{tabular}
 \caption{The momentum diffusivity coefficient $ \chi_{\phi}$ is calculated through TRANSP analysis. The time-average values and their curve-fits are shown by the circles  and the solid lines respectively}
@@ -185,7 +184,7 @@ Shot no 133775 \\
 
 The approach here is: given a desired plasma rotation profile that the operator wishes the system to reach and stabilize around, take the simplified model (equation~\ref{model0}) that relies on different models of $ n  m$, NTV and NBI torques from a representative class of plasma discharge ($\chi_\phi$ modeled from plasma discharge 133775), and use it to design a controller that will attempt to match any desired profile shape.
 
-\subsection{Actuators models}
+\subsection{Actuator models}
 
 In order to control the toroidal momentum of the plasma in a spherical tokamak, we consider the use of two actuator mechanisms, namely, the neutral beam injection (NBI) and the neoclassical toroidal viscosity (NTV). The neutral beams are the main sources of momentum for the plasma and the NTV actuator is primarily used as a source of drag on the plasma. For NSTX, $T_\textrm{\tiny NBI}$ is strongest  in the plasma core, whereas $T_\textrm{\tiny NTV}$ is strongest further out in the plasma. The momentum diffusivity $\chi_\phi$ allows transport of the momentum across these plasma regimes on the momentum diffusion timescale of about $0.1\,s$ in NSTX H-mode plasmas.
 
@@ -217,14 +216,14 @@ F_\textrm{\tiny{NBI}}(\rho) = a_\textrm{\tiny{NBI}} \exp\left( - \frac{\rho^2}{2
 \label{eq6}
 \end{equation}
 
-\begin{figure}
+\begin{figure*}
 \begin{tabular}{cc}
 \includegraphics[width=0.5\linewidth]{imene_figs/Goum7}& 
 \includegraphics[width=0.5\linewidth]{imene_figs/Goum8}
 \end{tabular}
 \caption{(a) represents the spatial profile for the neutral beam torque ($F_\textrm{\tiny{NBI}} $) for plasma discharge 133367.  The shade represents the values of the function spanned over time interval $(0.45-0.92)$ seconds.  The time-average values are shown by the dashed black line (-~-) the frozen time values and its curve-fits are shown by the solid blue lines (-) and the red dots (o) respectively. (b) represents the corresponding spatial average of the torque generated for the same plasma discharge ($ \overline{T}_\textrm{\tiny{NBI}}$). The dotted (o) and  solid (-) lines represent the model simulated and TRANSP analysis reading, respectively.  Here ($\tau_\textrm{\tiny{NBI}} \approx 0.01 \textrm{s}$ and $\kappa_\textrm{\tiny{NBI}} \approx 2\times10^{-6} $)}
 \label{fig:Fnbi}
-\end{figure}
+\end{figure*}
 Figure~{\ref{fig:Fnbi}}(\emph{a}) shows the deduced profile $F_\textrm{\tiny{NBI}}$ of the torque generated by the neutral beams. The time-average data points have been curve fitted by a Gaussian to TRANSP analysis of this discharge using a least-squares method, showing good agreement.  Typical values for the curve-fit parameters are $a_\textrm{\tiny{NBI}} \approx 1$ and $\sigma_\textrm{\tiny{NBI}} \approx 0.25$.
 
 The spatial average of the torque $\overline{T}_\textrm{\tiny{NBI}}(t)$ is related to the power input, $P_\textrm{\tiny{NBI}}(t)$, by a first order ordinary-differential equation, since the transmission of energy of the injected high-speed neutral atoms to torque is not instantaneous
@@ -384,15 +383,15 @@ In order to be able to use linear control tools, a linearized state-space realiz
 Recall that the original simplified system is given by equation~(\ref{model0}).
 Let $\omega_0$ be the steady state reached for the given beam power $ P_0$ and coil current $I_0$. The linearization around this steady state profile can be written as
 \begin{eqnarray}
-\omega (t, \rho) &= \omega_0 (\rho) + \omega_1(t, \rho), \\
-I (t) &= I_0 + I_1(t),\\
-P_\textrm{\tiny NBI} (t) &= P_0 + P_1(t),
+\omega (t, \rho) &= \bar{\omega} (\rho) + \omega^{'}(t, \rho), \\
+I (t) &= \bar{I} + I^{'}(t),\\
+P_\textrm{\tiny NBI} (t) &= \bar{P} + P^{'}(t),
 \end{eqnarray}
 where $ \omega_1$ , $ I_1$ and $P_1$ are the respective perturbations to the equilibria $\omega_0$, $I_0$ and $P_0$.
-By plugging in these equations into equations~(\ref{eqn:model_nbi_fix}) through (\ref{eqn20}) and simplifying, we obtain
+By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}) and (\ref{eqn:ntv}) and simplifying, we obtain
 \begin{equation}
-\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega_1 \\ \overline{T}_\textrm{\tiny{NBI}} \end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} a_{11}  & a_{12} \\ 0 & a_{22} \end{array} \! \right)} \left[\! \begin{array}{c} \omega_1 \\ \overline{T}_\textrm{\tiny{NBI}}    \end{array}  \!\right] + \left(\! \begin{array}{cc} b_{11}  & 0 \\ 0 & b_{22}    \end{array}  \!\right) \left[\! \begin{array}{c}  I^2_1 \\ P_1\end{array}\!\right]
+\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}} \end{array}\!\right]
+  ={ \left(\! \begin{array}{cc} a_{11}  & a_{12} \\ 0 & a_{22} \end{array} \! \right)} \left[\! \begin{array}{c} \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}}    \end{array}  \!\right] + \left(\! \begin{array}{cc} b_{11}  & 0 \\ 0 & b_{22}    \end{array}  \!\right) \left[\! \begin{array}{c}  I^{'2}  \\ P^{'}\end{array}\!\right]
 \label{SSR}
 \end{equation}
  where
@@ -409,48 +408,43 @@ By plugging in these equations into equations~(\ref{eqn:model_nbi_fix}) through 
  \end{eqnarray}
  The above system of equations are spatially discretized at a set of $n-2$ discrete points between $\rho \in (0,1)$ to generate a state-space realization. The boundary points $\rho_1 = 0$ and $\rho_n =1$ are excluded since the boundary conditions are prescribed. With this spatial discretization, the system can be represented in the standard state-space form:
 \begin{eqnarray}
- \dot{x}_1 &= A x_1 + B u_{1} ,\label{eqn:state-space1} \\
- y_1 &= C x_1, \label{eqn:state-space2} 
+ \dot{x} &= A x + B u ,\label{eqn:state-space1} \\
+ y &= C x, \label{eqn:state-space2} 
 \end{eqnarray}
-where $x_1 = [  \omega_1(\rho_2),  \omega_1(\rho_3), ...,   \omega_1(\rho_{n-1}), \overline{T}_\textrm{\tiny{NBI}}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega_1 , \ \ \overline{T}_\textrm{\tiny{NBI}}(t)  \right]$, $u_1 \in \mathbb{R}^p$ is the perturbed input $\left( I^2_1, \ \  P_1 \right)$ and $y_1 \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
+where $x = [  \omega^{'}(\rho_2),  \omega^{'}(\rho_3), ...,   \omega^{'}(\rho_{n-1}), \overline{T}_\textrm{\tiny{NBI}}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega^{'} , \ \ \overline{T}_\textrm{\tiny{NBI}}(t)  \right]$, $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
 Here, there are two actuators ($p=2$), one power input for the neutral beams and another one for the coil current producing the NTV.
 The outputs $y_1$ correspond to the sensor measurements of the plasma toroidal rotation. Here, two measurements are taken, one near the core and one towards the edge of the plasma ($q=2$).
 
 The matrices $A \in \mathbb{R}^{\, (n-1) \times (n-1)}$, $B \in \mathbb{R}^{\,(n-1) \times p}$, and $C \in \mathbb{R}^{\, q \times (n-1)}$ are respectively called the dynamics, control and sensor matrices.
 Because the two measurements are pointwise, the matrix $C$ is composed of zeros with a single one on each line.
 
-The state space realization can go one step further by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega_1$ on the $r$ chosen Bessel functions, the state $ \omega_1$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $(a_{1_0}, a_{1_1}, ..., a_{1_r})$, the state-space realization will have the reduced dimensions of $A \in \mathbb{R}^{\, (r+2) \times (r+2)}$, $B \in \mathbb{R}^{\,(r+2) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+2)}$.
+The state space realization can go one step further by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega_1$ on the $r$ chosen Bessel functions, the state $ \omega_1$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $(a_{0}, a_{1}, ..., a_{r})$, the state-space realization will have the reduced dimensions of $A \in \mathbb{R}^{\, (r+2) \times (r+2)}$, $B \in \mathbb{R}^{\,(r+2) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+2)}$.
 
 \subsection{Non-zero target state}
 Once the state-space realization is obtained, the goal is to force the shape of the plasma rotation profile to reach a target state $x_d$ such that the sensor output $y_d$ matches a reference signal $r_d$. In the final implementation, all one should have to prescribe is $r_d$ (e.g., plasma rotational frequency values at certain locations). The target state $x_d$ and the corresponding input $u_d$ are found by solving equations~(\ref{eqn:state-space1}) and (\ref{eqn:state-space2}) at steady state
 \begin{equation}
-\left[\! \begin{array}{c}  x_{1d} \\ u_{1d}\end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & B \\ C & 0 \end{array} \! \right)}^{-1} \left[\! \begin{array}{c} 0 \\ I    \end{array}  \!\right] r_{1d} = \left[\! \begin{array}{c} N_x \\ N_u    \end{array}  \!\right] r_{1d},
+\left[\! \begin{array}{c}  x_{d} \\ u_{d}\end{array}\!\right]
+  ={ \left(\! \begin{array}{cc} A  & B \\ C & 0 \end{array} \! \right)}^{-1} \left[\! \begin{array}{c} 0 \\ I    \end{array}  \!\right] r_{d} = \left[\! \begin{array}{c} F_x \\ F_u    \end{array}  \!\right] r_{d},
 \label{steadystate}
 \end{equation}
-where 
-\begin{eqnarray}
- x_{1d}  &= x_d - x_0, \\
- u_{1d}  &= u_d - u_0, \\
- r_{1d}  &= r_d - r_0 ,
-\end{eqnarray}
+
 and $\left( x_0, u_0  \right)$ is the equilibrium point around which the system is linearized, and $r_0$ the corresponding measurement values of $x_0 = \left( a_{0_0},a_{0_1}, ... , a_{0_r} ,  T_0 \right)$. 
  
 \subsection{Control design} 
-Once the target states $\left( x_{1d} , u_{1d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
+Once the target states $\left( x_{d} , u_{d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
 
 
 \subsubsection{Full-state feedback control design} 
 
 When the reduced-order model (in Bessel basis) is obtained, a feedback control law can be constructed as
 \begin{equation}
-   u_1 = u_{1d} - K(x_1 - x_{1d}) = - Kx_1 + Fr_{1d},
+   u = u_{d} - K(x - x_{d}) = - Kx + Fr_{d},
    \label{eqn:ctrllaw_ff}
 \end{equation}
-where $K$ is the feedback control gain to be determined from control design and $F = N_u + K N_x$ is the feedforward gain.  Therefore, the resulting closed-loop system can be written as
+where $K$ is the feedback control gain to be determined from control design and $F = F_u + K F_x$ is the feedforward gain.  Therefore, the resulting closed-loop system can be written as
 \begin{eqnarray}
-      \dot{x}_1 &= (A-BK) x_1 + BF r_{1d}, \\
-      y_1 &= C x_1.
+      \dot{x} &= (A-BK) x + BF r_{d}, \\
+      y &= C x.
 \end{eqnarray}
 In order to design the controller from equation~(\ref{eqn:ctrllaw_ff}), we have to choose the gains $K$.
 A  standard linear control technique (linear-quadratic regulators) is used in order to determine those gains while minimizing a quadratic cost function of the form:
@@ -460,11 +454,11 @@ A  standard linear control technique (linear-quadratic regulators) is used in or
 \end{equation}
 where $Q\ge 0$ and $R>0$ are symmetric, positive (semi-)definite weight matrices. $Q$ will be chosen to be equal to $a \, C^{T} C$ where $a$ is a constant and $R$ is a $2 \times 2$ diagonal matrix, thus equation~\ref{bel} reduces to
 \begin{equation}
-   \mathcal{J} = \int_{t_0}^\infty \left( a \, y_1^T y_1 + u_1^T R u_1 \right) dt.
+   \mathcal{J} = \int_{t_0}^\infty \left( a t\, y^T y + u^T R u \right) dt.
 \end{equation}
 
  
-The linear actuators $u_1$, from equation~(\ref{eqn:ctrllaw_ff}) , that minimizes $\mathcal{J}$ is given by the control gains of
+The linear actuators $u$, from equation~(\ref{eqn:ctrllaw_ff}), that minimizes $\mathcal{J}$ is given by the control gains of
 \begin{equation}
    K  = - R^{-1} B^T P,
 \end{equation}
@@ -489,14 +483,14 @@ As done previously, and using the reduced-order model, an observer is designed u
 Such errors typically arise from inaccuracies in the model, external disturbances, and sensor noise. For more details, see~\cite{SandP, AandM, Stengel}. 
 Considering the state evolution equation as
 \begin{eqnarray}
- \dot{\hat{x}}_1 &=  A \hat{x}_1 + B u_{1} + L (y_1 - C \hat{x}_1) =   (A- L C) \hat{x}_1 + B u_{1} + L y_1,
+ \dot{\hat{x}} &=  A \hat{x} + B u + L (y - C \hat{x}) =   (A- L C) \hat{x} + B u + L y,
  \label{obs}
 \end{eqnarray}
  where $L$ is the gain designed using a Kalman filter.    
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 By plugging in equation~(\ref{eqn:ctrllaw_ff}) into equation~(\ref{obs}), we obtain after simplification
 \begin{eqnarray}
-      \dot{\hat{x}}_1 &=  (A- B K  -L C) \hat{x}_1 + B F r_{1d} + L y_1.
+      \dot{\hat{x}} &=  (A- B K  -L C) \hat{x} + B F r_{d} + L y.
 \end{eqnarray}
 
 
@@ -504,18 +498,18 @@ By plugging in equation~(\ref{eqn:ctrllaw_ff}) into equation~(\ref{obs}), we obt
 
 Because the primary goal is tracking the desired rotation profile, we want to minimize the steady state error between the output (measured) and the target profile. One way to handle such issue is to use integral action
 \begin{eqnarray}
-\dot{x}_i = y_1 - r_{1d} = C x_1 - r_{1d}.
+\dot{x}_i = y - r_{d} = C x - r_{d}.
  \label{integral}
 \end{eqnarray}
 The overall system can be then written as
 \begin{equation}
-\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x_1 \\ x_i\end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x_1 \\ x_i    \end{array}  \!\right] + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u_1 -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) r_{1d}
+\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right]
+  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ x_i    \end{array}  \!\right] + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) r_{d}
 \label{int2}
 \end{equation}
 with a new feedback law designed as
 \begin{equation}
-u_1 =   - \left(\! \begin{array}{cc}  K & K_i\end{array}\!\right) \left[\! \begin{array}{c}  x_1 \\ x_i\end{array}\!\right] + F r_{1d}
+u =   - \left(\! \begin{array}{cc}  K & K_i\end{array}\!\right) \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right] + F r_{d}
 \end{equation}
 where the gains $K$ and $K_i$ can be determined through the MATLAB command LQI.\\
 
@@ -546,7 +540,7 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 
 \begin{figure}
 \begin{tikzpicture}[x=0.75cm]
-		\node (r) {$r_{1d}$};
+		\node (r) {$r_{d}$};
 		\node[junction, right=1.5 of r] (r in) {};
 		\node[block, right=2 of r in] (N) {$N$};
 		\node[block, below=of N] (L) {L};
@@ -563,10 +557,10 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[junction, right=0.5 of sat] (after sat) {};
 		\node[block, right=1.5 of after sat] (P) {Plant};
 		\node[junction, right=0.7 of P] (P out) {};
-		\node[right=0.7 of P out] (y) {$y_1$};
+		\node[right=0.7 of P out] (y) {$y$};
 		\node[junction, left=1 of L, yshift=3] (y in) {};
 		\node[coord, left=1 of L, yshift=-3] (sub y in) {};
-		\node[coord, label=left:$y_1$, left=2.4 of y in] (y input) {};
+		\node[coord, label=left:$y$, left=2.4 of y in] (y input) {};
 		\node[block, above=of N] (Ki) {$K_i$};
 		\node[sum] (sum lqi) at (Ki -| y in) {};
 		\node[sum, right=of Ki] (AW out) {};
@@ -575,16 +569,16 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[block, above=0.5 of sum AW] (AW) {AW};
 		
 		\draw[connector] (r) to (r in) to (N);
-		\draw[connector] (N.east |- sum inputs) to node [above] {$u_{1d}$} (sum inputs);
-		\draw[connector] (N)[yshift=-12] -| node [right, near end] {$x_{1d}$} (sum feedback);
+		\draw[connector] (N.east |- sum inputs) to node [above] {$u_{d}$} (sum inputs);
+		\draw[connector] (N)[yshift=-12] -| node [right, near end] {$x_{d}$} (sum feedback);
 		\draw[connector] (sum feedback) to (K);
 		\draw[connector] (K) -| (sum inputs);
 		\draw[connector] (sum inputs) to (before sat) to (sat);
 		\draw[connector] (sat) to (after sat) to ++(down:2.6) -| (sub y in) to (sub y in -| L.west);
-		\draw[connector] (after sat) to node [above, pos=0.7] {$u_1$} (P);
+		\draw[connector] (after sat) to node [above, pos=0.7] {$u$} (P);
 		\draw[connector] (P) to (P out) to (y);
 		\draw[connector] (P out) -- ++(down:3.5) -| (y input) to (y in) to (y in -| L.west);
-		\draw[connector] (L) to node [above] {$\hat x_1$} node [below, very near end] {$-$} (sum feedback);
+		\draw[connector] (L) to node [above] {$\hat x$} node [below, very near end] {$-$} (sum feedback);
 		\draw[connector] (r in) |- node [above, very near end] {$-$} (sum lqi);
 		\draw[connector] (y in) to (sum lqi);
 		\draw[connector] (sum lqi) to (Ki);
