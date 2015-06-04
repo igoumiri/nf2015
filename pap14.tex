@@ -380,36 +380,37 @@ In this case, a state-space realization is derived and linear quadratic regulato
 In order to be able to use linear control tools, a linearized state-space realization of the original simplified nonlinear system has to be built.
 Recall that the original simplified system is given by equation~(\ref{model0}).
 Let $\omega_0$ be the steady state reached for the given beam power $ P_0$ and coil current $I_0$. The linearization around this steady state profile can be written as
-\begin{eqnarray}
+\begin{align}
 \omega (t, \rho) &= \bar{\omega} (\rho) + \omega^{'}(t, \rho), \\
 I (t) &= \bar{I} + I^{'}(t),\\
 P_\textrm{\tiny NBI} (t) &= \bar{P} + P^{'}(t),
-\end{eqnarray}
+\end{align}
 where $ \omega_1$ , $ I_1$ and $P_1$ are the respective perturbations to the equilibria $\omega_0$, $I_0$ and $P_0$.
 By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}) and (\ref{eqn:ntv}) and simplifying, we obtain
-\begin{equation}
-\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}} \end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} a_{11}  & a_{12} \\ 0 & a_{22} \end{array} \! \right)} \left[\! \begin{array}{c} \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}}    \end{array}  \!\right] + \left(\! \begin{array}{cc} b_{11}  & 0 \\ 0 & b_{22}    \end{array}  \!\right) \left[\! \begin{array}{c}  I^{'2}  \\ P^{'}\end{array}\!\right]
-\label{SSR}
-\end{equation}
+\begin{multline}
+	\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}} \end{array}\!\right]
+		={ \left(\! \begin{array}{cc} a_{11}  & a_{12} \\ 0 & a_{22} \end{array} \! \right)} \left[\! \begin{array}{c} \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}}    \end{array}  \!\right] \\
+		+ \left(\! \begin{array}{cc} b_{11}  & 0 \\ 0 & b_{22}    \end{array}  \!\right) \left[\! \begin{array}{c}  I^{'2}  \\ P^{'}\end{array}\!\right]
+	\label{SSR}
+\end{multline}
  where
  \begin{eqnarray}
- a_{11} =  \frac{1}{n m \left<R^2\right>} \left[ \left( \frac{\partial V}{\partial\rho}\right)^{-1}
-   \frac{\partial}{\partial \rho} 
+ a_{11} =  \frac{1}{n m \left<R^2\right>} \Bigg[ \left( \frac{\partial V}{\partial\rho}\right)^{-1} \nonumber \\
+   \hspace{-1em}\frac{\partial}{\partial \rho} 
    \left[\frac{\partial V}{\partial \rho}(n m)\chi_\phi 
    \left< R^2 (\nabla \rho)^2\right> 
-   \frac{\partial}{\partial\rho}\right]-K G(\rho) \langle R^2 \rangle  I^2_0 \right]  \nonumber \\
+   \frac{\partial}{\partial\rho}\right]-K G(\rho) \langle R^2 \rangle  I^2_0 \Bigg]  \nonumber \\
  a_{12} =  \frac{ F_\textrm{\tiny{NBI}}(\rho) }{n m \left<R^2\right>}\nonumber \\
  a_{22} = - \frac{1}{\tau_\textrm{\tiny{NBI}}}  \nonumber \\  
  b_{11} = - \frac{1}{n m \left<R^2\right>} K G(\rho) \langle R^2 \rangle  \omega_0 \nonumber \\
  b_{22} = \kappa_\textrm{\tiny{NBI}} \nonumber
  \end{eqnarray}
  The above system of equations are spatially discretized at a set of $n-2$ discrete points between $\rho \in (0,1)$ to generate a state-space realization. The boundary points $\rho_1 = 0$ and $\rho_n =1$ are excluded since the boundary conditions are prescribed. With this spatial discretization, the system can be represented in the standard state-space form:
-\begin{eqnarray}
- \dot{x} &= A x + B u ,\label{eqn:state-space1} \\
- y &= C x, \label{eqn:state-space2} 
-\end{eqnarray}
-where $x = [  \omega^{'}(\rho_2),  \omega^{'}(\rho_3), ...,   \omega^{'}(\rho_{n-1}), \overline{T}_\textrm{\tiny{NBI}}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega^{'} , \ \ \overline{T}_\textrm{\tiny{NBI}}(t)  \right]$, $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
+\begin{align}
+	\dot{x} &= A x + B u, \label{eqn:state-space1} \\
+	y &= C x, \label{eqn:state-space2} 
+\end{align}
+where $x = [  \omega^{'}(\rho_2),\ldots,\,\omega^{'}(\rho_{n-1}), \overline{T}_\textrm{\tiny{NBI}}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega^{'} , \ \ \overline{T}_\textrm{\tiny{NBI}}(t)  \right]$, $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
 Here, there are two actuators ($p=2$), one power input for the neutral beams and another one for the coil current producing the NTV.
 The outputs $y_1$ correspond to the sensor measurements of the plasma toroidal rotation. Here, two measurements are taken, one near the core and one towards the edge of the plasma ($q=2$).
 
@@ -426,7 +427,7 @@ Once the state-space realization is obtained, the goal is to force the shape of 
 \label{steadystate}
 \end{equation}
 
-and $\left( x_0, u_0  \right)$ is the equilibrium point around which the system is linearized, and $r_0$ the corresponding measurement values of $x_0 = \left( a_{0_0},a_{0_1}, ... , a_{0_r} ,  T_0 \right)$. 
+and $\left( x_0, u_0  \right)$ is the equilibrium point around which the system is linearized, and $r_0$ the corresponding measurement values of $x_0 = \left( a_{0_0},\,a_{0_1},\ldots,\,a_{0_r},\,T_0 \right)$. 
  
 \subsection{Control design} 
 Once the target states $\left( x_{d} , u_{d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
@@ -440,10 +441,10 @@ When the reduced-order model (in Bessel basis) is obtained, a feedback control l
    \label{eqn:ctrllaw_ff}
 \end{equation}
 where $K$ is the feedback control gain to be determined from control design and $F = F_u + K F_x$ is the feedforward gain.  Therefore, the resulting closed-loop system can be written as
-\begin{eqnarray}
+\begin{align}
       \dot{x} &= (A-BK) x + BF r_{d}, \\
       y &= C x.
-\end{eqnarray}
+\end{align}
 In order to design the controller from equation~(\ref{eqn:ctrllaw_ff}), we have to choose the gains $K$.
 A  standard linear control technique (linear-quadratic regulators) is used in order to determine those gains while minimizing a quadratic cost function of the form:
 \begin{equation}
@@ -480,31 +481,35 @@ In most applications, the state of the full system is unknown, and thus a full-s
 As done previously, and using the reduced-order model, an observer is designed using a Kalman filter as a quadratic estimator. This method is optimal if the errors in representing the reduced state $x_r$ and the measurements $y$ are stochastic Gaussian processes. 
 Such errors typically arise from inaccuracies in the model, external disturbances, and sensor noise. For more details, see~\cite{SandP, AandM, Stengel}. 
 Considering the state evolution equation as
-\begin{eqnarray}
- \dot{\hat{x}} &=  A \hat{x} + B u + L (y - C \hat{x}) =   (A- L C) \hat{x} + B u + L y,
- \label{obs}
-\end{eqnarray}
+\begin{equation}
+	\begin{split}
+		\dot{\hat{x}} &=  A \hat{x} + B u + L (y - C \hat{x}) \\
+			&= (A- L C) \hat{x} + B u + L y,
+		\label{obs}
+	\end{split}
+\end{equation}
  where $L$ is the gain designed using a Kalman filter.    
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 By plugging in equation~(\ref{eqn:ctrllaw_ff}) into equation~(\ref{obs}), we obtain after simplification
-\begin{eqnarray}
-      \dot{\hat{x}} &=  (A- B K  -L C) \hat{x} + B F r_{d} + L y.
-\end{eqnarray}
+\begin{equation}
+      \dot{\hat{x}} =  (A- B K  -L C) \hat{x} + B F r_{d} + L y.
+\end{equation}
 
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
 
 Because the primary goal is tracking the desired rotation profile, we want to minimize the steady state error between the output (measured) and the target profile. One way to handle such issue is to use integral action
-\begin{eqnarray}
-\dot{x}_i = y - r_{d} = C x - r_{d}.
- \label{integral}
-\end{eqnarray}
-The overall system can be then written as
 \begin{equation}
-\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ x_i    \end{array}  \!\right] + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) r_{d}
-\label{int2}
+	\dot{x}_i = y - r_{d} = C x - r_{d}.
+	\label{integral}
 \end{equation}
+The overall system can be then written as
+\begin{multline}
+\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right]
+  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ x_i    \end{array}  \!\right] \\
+  + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) r_{d}
+\label{int2}
+\end{multline}
 with a new feedback law designed as
 \begin{equation}
 u =   - \left(\! \begin{array}{cc}  K & K_i\end{array}\!\right) \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right] + F r_{d}
@@ -644,7 +649,7 @@ Figure~\ref{fig:rot20} represents the time evolution of the rotation measurement
 Figure~\ref{fig:rot19} represents the requested inputs (coil current and overall beam power) needed to reach the desired profile of Figure~\ref{fig:rot18}. It can be noticed that the current does not saturate whereas the beam power does.
 
 Because the initial profile (profile \#(1) in Figure~\ref{fig:rot18}) before turning the controller ON, is above the targeted profile  (profile \#(4) in Figure~\ref{fig:rot18}), and the difference between the two profiles is higher towards the core of the plasma (where the beam power acts), the controller tries to first push the power down starting from $6$\,MW at the initial state before controlling, up to $2$\,MW when it hits saturation. The green dashed line in Figure~\ref{fig:rot19} shows how the controller would actuate the beam power if no saturation was effecting. During the rapid decrease of the beams power, the controller increases the coil current in order to increase the drag and allows a quicker descent action towards the edge of the desired profile.  
-The controller and the actuators, when they can be activated instantaneously, enable the rotation profile to reach its target about 2 times faster (about 60 ms) compared to the momentum diffusion time (about 100 ms).
+The controller and the actuators, when they can be activated instantaneously, enable the rotation profile to reach its target about 2 times faster (about 60\,ms) compared to the momentum diffusion time (about 100\,ms).
 
 \subsection{Computational approach for TRANSP}
 In order to predict the toroidal rotation for NSTX, the TRANSP code running in predictive mode is used for a given beam power and coil current. It also takes as inputs the time histories of the plasma boundary shape, plasma current, electron and ion (Chang-Hinton model \cite{Changhinton}) temperature and density profiles and the momentum diffusivity coefficient.
