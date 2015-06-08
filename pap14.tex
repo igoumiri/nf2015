@@ -42,7 +42,7 @@
 \ead{igoumiri@princeton.edu}
 \vspace{10pt}
 \begin{indented}
-\item[]May 2015
+\item[]June 2015
 \end{indented}
 
 \begin{abstract}
@@ -90,12 +90,11 @@ damage device components.
 This makes disruption avoidance by any means, including control of the plasma
 rotation, particularly important.
 %
-Plasma rotation control systems are therefore needed to evolve the plasma
+Control systems are therefore needed to evolve the plasma
 rotation through MHD stable states toward a desirable steady-state rotation
 profile, and maintain that profile whenever it is altered by transient plasma
 events.
 %
-\remark{CWR: This seems a bit long-winded and repetitive to me.}
 
 The present work defines a model-based algorithm for plasma rotation control based on experimental data from the National Spherical Torus Experiment (NSTX) \cite{Ono00} that measures the rotational (toroidal) momentum transport in the tokamak. Data-driven modeling techniques have been successfully used in the past to model plasma transport dynamics for active control design in fusion reactors \cite{Moreau13, Boyer133, Boyer144, Barton12}. The uniqueness of this work is the development of a one-dimensional partial differential equation model that is not computationally expensive so it may be implemented for real-time control.  
 The present simplified model of plasma momentum transport retains the most important elements of the plasma momentum balance and therefore reproduces the plasma rotation evolution of experiments.
@@ -329,7 +328,7 @@ The overall behavior of the plasma is captured qualitatively very well using the
 
 \subsection{Reduced order model using Bessel functions}
 
-Among many model reduction techniques, such as singular perturbation or Hankel norm reduction methods, the projection-based method, which involves projection of a model onto a set of modes, is a widely used approach. These may be global eigenmodes of a linearized operator \cite{Akervik07}, modes determined by proper orthogonal decomposition (POD) of a set of data, or variants of POD modes \cite{Holmes97}. 
+Among many model reduction techniques, such as singular perturbation or Hankel norm reduction methods, the projection-based method, which involves projection of a model onto a set of modes, is a widely used approach. These may be global eigenmodes of a linearized operator \cite{Akervik07}, modes determined by proper orthogonal decomposition (POD) of a set of data, or variants of POD modes \cite{Holmes12}. 
 
 It can be noticed from the mathematical structure of the momentum diffusion equation~(\ref{model0}), that the diffusion part looks like a Laplacian operator in cylindrical coordinates, thus the Bessel functions will be the natural choice for the basis. 
 
@@ -377,15 +376,16 @@ This Bessel decomposition is now applied on the simplified model defined by equa
 In this case, a state-space realization is derived and linear quadratic regulators are used to design a feedback controller that is optimal in minimizing a prescribed quadratic cost function (details are explained below).
 
 \subsection{State space realization}
+\label{SS}
 In order to be able to use linear control tools, a linearized state-space realization of the original simplified nonlinear system has to be built.
 Recall that the original simplified system is given by equation~(\ref{model0}).
-Let $\omega_0$ be the steady state reached for the given beam power $ P_0$ and coil current $I_0$. The linearization around this steady state profile can be written as
+Let $\bar{\omega}$ be the steady state reached for the given beam power $ \bar{P}$ and coil current $\bar{I}$. The linearization around this steady state profile can be written as
 \begin{align}
 \omega (t, \rho) &= \bar{\omega} (\rho) + \omega^{'}(t, \rho), \\
 I (t) &= \bar{I} + I^{'}(t),\\
 P_\textrm{\tiny NBI} (t) &= \bar{P} + P^{'}(t),
 \end{align}
-where $ \omega_1$ , $ I_1$ and $P_1$ are the respective perturbations to the equilibria $\omega_0$, $I_0$ and $P_0$.
+where $ \omega^{'}$ , $ I^{'}$ and $P^{'}$ are the respective perturbations to the equilibria $\bar{\omega}$, $\bar{I}$ and $\bar{P}$.
 By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}) and (\ref{eqn:ntv}) and simplifying, we obtain
 \begin{multline}
 	\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega^{'} \\ \overline{T}_\textrm{\tiny{NBI}} \end{array}\!\right]
@@ -412,12 +412,12 @@ By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}
 \end{align}
 where $x = [  \omega^{'}(\rho_2),\ldots,\,\omega^{'}(\rho_{n-1}), \overline{T}_\textrm{\tiny{NBI}}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega^{'} , \ \ \overline{T}_\textrm{\tiny{NBI}}(t)  \right]$, $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
 Here, there are two actuators ($p=2$), one power input for the neutral beams and another one for the coil current producing the NTV.
-The outputs $y_1$ correspond to the sensor measurements of the plasma toroidal rotation. Here, two measurements are taken, one near the core and one towards the edge of the plasma ($q=2$).
+The outputs $y$ correspond to the sensor measurements of the plasma toroidal rotation. Here, two measurements are taken, one near the core and one towards the edge of the plasma ($q=2$).
 
 The matrices $A \in \mathbb{R}^{\, (n-1) \times (n-1)}$, $B \in \mathbb{R}^{\,(n-1) \times p}$, and $C \in \mathbb{R}^{\, q \times (n-1)}$ are respectively called the dynamics, control and sensor matrices.
 Because the two measurements are pointwise, the matrix $C$ is composed of zeros with a single one on each line.
 
-The state space realization can go one step further by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega_1$ on the $r$ chosen Bessel functions, the state $ \omega_1$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $(a_{0}, a_{1}, ..., a_{r})$, the state-space realization will have the reduced dimensions of $A \in \mathbb{R}^{\, (r+2) \times (r+2)}$, $B \in \mathbb{R}^{\,(r+2) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+2)}$.
+The state space realization can go one step further by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega$ on the $r$ chosen Bessel functions, the state $ \omega$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $(a_{0}, a_{1}, ..., a_{r})$, the state-space realization will have the reduced dimensions of $A \in \mathbb{R}^{\, (r+2) \times (r+2)}$, $B \in \mathbb{R}^{\,(r+2) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+2)}$.
 
 \subsection{Non-zero target state}
 Once the state-space realization is obtained, the goal is to force the shape of the plasma rotation profile to reach a target state $x_d$ such that the sensor output $y_d$ matches a reference signal $r_d$. In the final implementation, all one should have to prescribe is $r_d$ (e.g., plasma rotational frequency values at certain locations). The target state $x_d$ and the corresponding input $u_d$ are found by solving equations~(\ref{eqn:state-space1}) and (\ref{eqn:state-space2}) at steady state
@@ -426,8 +426,7 @@ Once the state-space realization is obtained, the goal is to force the shape of 
   ={ \left(\! \begin{array}{cc} A  & B \\ C & 0 \end{array} \! \right)}^{-1} \left[\! \begin{array}{c} 0 \\ I    \end{array}  \!\right] r_{d} = \left[\! \begin{array}{c} F_x \\ F_u    \end{array}  \!\right] r_{d},
 \label{steadystate}
 \end{equation}
-
-and $\left( x_0, u_0  \right)$ is the equilibrium point around which the system is linearized, and $r_0$ the corresponding measurement values of $x_0 = \left( a_{0_0},\,a_{0_1},\ldots,\,a_{0_r},\,T_0 \right)$. 
+and $\left( \bar{x}, \bar{u}  \right)$ is the equilibrium point around which the system is linearized, $\bar{r}$ the corresponding measurement values of $\bar{x} = \left( \bar{a}_{0},\, \bar{a}_{1},\ldots,\, \bar{a}_{r},\,\bar{T} \right)$. 
  
 \subsection{Control design} 
 Once the target states $\left( x_{d} , u_{d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
@@ -500,35 +499,42 @@ By plugging in equation~(\ref{eqn:ctrllaw_ff}) into equation~(\ref{obs}), we obt
 
 Because the primary goal is tracking the desired rotation profile, we want to minimize the steady state error between the output (measured) and the target profile. One way to handle such issue is to use integral action
 \begin{equation}
-	\dot{x}_i = y - r_{d} = C x - r_{d}.
+	\dot{z} = y - r_{d} = C x - r_{d}.
 	\label{integral}
 \end{equation}
 The overall system can be then written as
 \begin{multline}
-\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ x_i    \end{array}  \!\right] \\
+\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ z \end{array}\!\right]
+  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ z    \end{array}  \!\right] \\
   + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) r_{d}
 \label{int2}
 \end{multline}
 with a new feedback law designed as
 \begin{equation}
-u =   - \left(\! \begin{array}{cc}  K & K_i\end{array}\!\right) \left[\! \begin{array}{c}  x \\ x_i\end{array}\!\right] + F r_{d}
+u =   - \left(\! \begin{array}{cc}  K & K_I\end{array}\!\right) \left[\! \begin{array}{c}  x \\ z \end{array}\!\right] + F r_{d}
 \end{equation}
-where the gains $K$ and $K_i$ can be determined through the MATLAB command LQI.\\
+where the gains $K$ and $K_I$ can be determined through the MATLAB command LQI.\\
 
-However, actuator saturation is a problem that occurs in control systems where the plant inputs are limited by maximum and or minimum allowable values. Thus the relation between the desired plant input and the actual plant input is modeled similarly to Figure~\ref{fig:saturation}
+However, actuator saturation is a problem that occurs in control systems where the plant inputs are limited by maximum and or minimum allowable values. Thus the relation between the desired plant input and the actual plant input is modeled as
+
+\[
+    u_{actual} = 
+\begin{cases}
+    u_{H} & u_{req} > u_{H} \\
+    u_{req} &  u_{H} \ge u_{req} \ge u_{L} \\
+    u_{L}              & u_{req} < u_{L}
+\end{cases}
+\]
+
 where $u_H$ and $u_L$ represent respectively, the maximum and minimum control effort allowed by the physical actuators.
-\remark{!!!!! TODO: IMPROVE/REMOVE THIS PART !!!!!}
-Here in the case of the integrator with output $u_{req}$, everything is behaving well as long as $u_{req}$ is between $u_L$ and $u_H$. However if $u_{req}$ exceeds $u_H$, then $u_{actual}$ is limited to its maximum value $u_H$. This in itself may not be a problem. The problem arises if the steady state error remains positive, for then, the integrator continues to integrate and $u_{req}$ may increase well beyond $u_H$. Then when the steady state error becomes negative, it may take considerable time for $u_{req}$ to decrease below $u_H$. In the meantime, $u_{actual}$ is held at $u_H$, giving the incorrect control input to the system.
-This effect of saturation is called the windup. It arises because the controllers we design are dynamical in nature, which means that they store energy and information. In order to correct for this, a common approach is to limit the state of the integrator so that it is consistent with the saturation effects being experienced by the plant input $u_{actual}$.
-
-Compensating for windup consists of introducing a decay rate for $x_i$ tuned so that it is slow enough not to interfere with the dynamics but fast enough to prevent windup.
-More details can be found in \cite{Lewis}
+Here in the case of the integrator with output $u_{req}$, everything is behaving well as long as $u_{req}$ is between $u_L$ and $u_H$. However if $u_{req}$ exceeds $u_H$, then $u_{actual}$ is limited to its maximum value $u_H$. Problems arise if the steady state error remains positive, for then, the integrator continues to integrate and $u_{req}$ may increase well beyond $u_H$. Then when the steady state error becomes negative, it may take considerable time for $u_{req}$ to decrease below $u_H$. In the meantime, $u_{actual}$ is held at $u_H$, giving the incorrect control input to the system.
+This effect of saturation is called the windup.  
+Compensating for windup consists of introducing a decay rate for $z$ tuned so that it is slow enough not to interfere with the dynamics but fast enough to prevent windup. More details can be found in \cite{AandM, Lewis}
 
 Once all different parts of the controller are defined, handled and designed, all one is left with is to combine them all into a global controller that contains all the characteristics and aspects of the dynamics.
-Figure~\ref{fig:model1} shows the schematic of this general controller that combine the LQR, the observer, the integrator and the anti-windup detailed above.
+Figure~\ref{fig:model1} shows the schematic of this general controller that combine the LQR, the observer, the integrator and the anti-windup detailed above. Because the actual state is the perturbed state, the steady state equilibrium input defined in Section~\ref{SS} by $\bar{u} = \left( \bar{I}^{2}, \   \bar{P} \right)$ has to be added to the actual input $u$ before entering the plant.
 
-\begin{figure}
+\begin{figure*}
 \begin{tikzpicture}[x=0.75cm]
 		\node (r) {$r_{d}$};
 		\node[junction, right=1.5 of r] (r in) {};
@@ -551,7 +557,7 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[junction, left=1 of L, yshift=3] (y in) {};
 		\node[coord, left=1 of L, yshift=-3] (sub y in) {};
 		\node[coord, label=left:$y$, left=2.4 of y in] (y input) {};
-		\node[block, above=of N] (Ki) {$K_i$};
+		\node[block, above=of N] (Ki) {$K_I$};
 		\node[sum] (sum lqi) at (Ki -| y in) {};
 		\node[sum, right=of Ki] (AW out) {};
 		\node[block, right=0.9 of AW out] (integrator) {$\displaystyle\int$};
@@ -584,12 +590,10 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[green!50!black, anchor=south, font=\large\bfseries] at (8.4,3.1) {Controller};
 	\end{tikzpicture}
 
-\caption{Global schematic of the controller that combine a feedforward $(N)$, a LQR $(K)$, an observer $(L)$, an integrator $(K_i)$ and an anti-windup $(AW)$.}
+\caption{Global schematic of the controller that combine a feedforward $(N)$, a LQR $(K)$, an observer $(L)$, an integrator $(K_I)$ and an anti-windup $(AW)$.}
 \label{fig:model1}
-\end{figure}
+\end{figure*}
 
-
-\clearpage
 
 
 \section{Simulation results} 
@@ -711,7 +715,7 @@ In the above plasma control demonstrations, a simple reduced order model has bee
 Based on this simplified model, a complete feedback control design using optimal control techniques as shown above and enables controlling the plasma about a desired profile. This reduced-order controller was then tested using the NSTX predictive model and enabled the rotation profile to reach the desired profile.
 
 Generally, broader toroidal rotation profile brings more stability to the plasma \cite{Sabbagh10} and local rotation shear can affect MHD modes  \cite{Gerhardt09}. In the new upgrade of the device, NSTX-U, three additional NBI sources (Figure~{\ref{NBI_pics}}) will provide significantly different torque profiles which can affect a broader region of the plasma, specifically towards the edge and can change the shear locally. In this case, the controller can use these added beam sources allowing significantly greater control of plasma instabilities.
-Furthermore, while only the n = 3 applied field configuration was considered for the NTV actuator, it is possible to include different applied field spectra which can change the NTV torque profile. For example, an $n=1$ field configuration can allow a deeper penetration of this torque profile which will expand the capability of rotation control.
+Furthermore, while only the $n = 3$ applied field configuration was considered for the NTV actuator, it is possible to include different applied field spectra which can change the NTV torque profile. For example, an $n=1$ field configuration can allow a deeper penetration of this torque profile which will expand the capability of rotation control.
 
 The present controller was designed using models tuned to match experimental data. A next step could be to develop control-oriented models directly from simulations. This capability would have a large impact: fewer experiments would be needed to calibrate the models/controllers, and more importantly, one could predict actuator requirements (e.g., amplitude, bandwidth, latency), and any inherent performance limitations for future machines such as ITER.
 These control-oriented models such as those being developed in TRANSP for NSTX-Upgrade will be tested for their robustness in producing greater range of target profile shapes in order to maintain and optimize plasma stability for the worst case scenarios. 
