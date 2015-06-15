@@ -450,9 +450,9 @@ A  standard linear control technique (linear-quadratic regulators) is used in or
  \mathcal{J} = \int_{t_0}^\infty \left( x^T Q x + u^T R u \right) dt,
  \label{bel}
 \end{equation}
-where $Q\ge 0$ and $R>0$ are symmetric, positive (semi-)definite weight matrices. $Q$ will be chosen to be equal to $a \, C^{T} C$ where $a$ is a constant and $R$ is a $2 \times 2$ diagonal matrix, thus equation~\ref{bel} reduces to
+where $Q\ge 0$ and $R>0$ are symmetric, positive (semi-)definite weight matrices. $Q$ will be chosen to be equal to $q \, C^{T} C$ where $q$ is a constant and $R$ is a $2 \times 2$ diagonal matrix, thus equation~\ref{bel} reduces to
 \begin{equation}
-   \mathcal{J} = \int_{t_0}^\infty \left( a t\, y^T y + u^T R u \right) dt.
+   \mathcal{J} = \int_{t_0}^\infty \left( q \, y^T y + u^T R u \right) dt.
 \end{equation}
 
  
@@ -538,11 +538,11 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 \begin{tikzpicture}[x=0.75cm]
 		\node (r) {$r_{d}$};
 		\node[junction, right=1.5 of r] (r in) {};
-		\node[block, right=2 of r in] (N) {$F$};
-		\node[block, below=of N] (L) {L};
+		\node[block, right=2 of r in] (F) {$F$};
+		\node[block, below=of F] (L) {L};
 		\node[sum, right=of L] (sum feedback) {};
 		\node[block, right=0.9 of sum feedback] (K) {$K$};
-		\node[sum, right=5 of N, yshift=3] (sum inputs) {};
+		\node[sum, right=5 of F, yshift=3] (sum inputs) {};
 		\node[junction, right=1 of sum inputs] (before sat) {};
 		\node[block, right=0.5 of before sat] (sat) {
 			\begin{tikzpicture}
@@ -557,16 +557,16 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[junction, left=1 of L, yshift=3] (y in) {};
 		\node[coord, left=1 of L, yshift=-3] (sub y in) {};
 		\node[coord, label=left:$y$, left=2.4 of y in] (y input) {};
-		\node[block, above=of N] (Ki) {$K_I$};
+		\node[block, above=of F] (Ki) {$K_I$};
 		\node[sum] (sum lqi) at (Ki -| y in) {};
 		\node[sum, right=of Ki] (AW out) {};
 		\node[block, right=0.9 of AW out] (integrator) {$\displaystyle\int$};
 		\node[sum, above=0.5 of sat] (sum AW) {};
 		\node[block, above=0.5 of sum AW] (AW) {AW};
 		
-		\draw[connector] (r) to (r in) to (N);
-		\draw[connector] (N.east |- sum inputs) to node [above] {$u_{d}$} (sum inputs);
-		\draw[connector] (N)[yshift=-12] -| node [right, near end] {$x_{d}$} (sum feedback);
+		\draw[connector] (r) to (r in) to (F);
+		\draw[connector] (F.east |- sum inputs) to node [above] {$u_{d}$} (sum inputs);
+		\draw[connector] (F)[yshift=-12] -| node [right, near end] {$x_{d}$} (sum feedback);
 		\draw[connector] (sum feedback) to (K);
 		\draw[connector] (K) -| (sum inputs);
 		\draw[connector] (sum inputs) to (before sat) to (sat);
@@ -590,7 +590,7 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\node[green!50!black, anchor=south, font=\large\bfseries] at (8.4,3.1) {Controller};
 	\end{tikzpicture}
 
-\caption{Global schematic of the controller that combine a feedforward $(N)$, a LQR $(K)$, an observer $(L)$, an integrator $(K_I)$ and an anti-windup $(AW)$.}
+\caption{Global schematic of the controller that combine a feedforward $(F)$, a LQR $(K)$, an observer $(L)$, an integrator $(K_I)$ and an anti-windup $(AW)$.}
 \label{fig:model1}
 \end{figure*}
 
