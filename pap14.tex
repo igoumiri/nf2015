@@ -64,7 +64,8 @@ Based on the data-driven model obtained, a feedback controller is designed, and 
 
 \section{Introduction}
 
-Spherical tokamaks (ST) like the National Spherical Torus Experiment facility (NSTX  \cite{Ono00}) are toroidal magnetic fusion devices that have been proven experimentally to realize theoretical expectations of efficient and compact advanced tokamak operation to generate fusion power by producing high plasma pressures in relation to the pressure of the magnetic field used to create the plasma equilibrium. These high pressures can cause rapidly growing magnetohydrodynamic (MHD) plasma instabilities which can either reduce the plasma pressure, or terminate the plasma (disruption). 
+Spherical tokamaks (ST) like the National Spherical Torus Experiment facility (NSTX  \cite{Ono00}) are toroidal magnetic fusion devices that have been proven experimentally to realize theoretical expectations of efficient and compact advanced tokamak operation to generate fusion power by producing high plasma pressures in relation to the pressure of the magnetic field used to create the plasma equilibrium. 
+In certain circumstances, these high pressures can cause rapidly growing MagnetoHydroDynamic (MHD) plasma instabilities which can either reduce the plasma pressure, or terminate the plasma (disruption). 
 These instabilities have been shown to be sensitive to changes in the plasma
 rotation magnitude and profile. For instance, greater stability of tearing modes
 has been associated with increased shear in the rotation profile
@@ -74,10 +75,10 @@ wall modes \cite{Sabbagh10, Berkery10}. Furthermore, rotational shear can affect
 plasma turbulence and consequently can have an impact on transport processes and
 the energy confinement performance of tokamak plasmas. In present-day pulsed
 tokamaks, plasma rotation can evolve toward profiles that are unstable to MHD
-instabilities through standard heat and momentum transport processes.
+instabilities through normal heat and momentum transport processes.
 %
 Even if these profiles evolve by chance to a steady-state profile that is
-stable, transient processes including edge-localized modes, internal transport
+stable, transient processes including Edge-Localized Modes (ELMs), internal transport
 barriers, and different heating mechanisms can alter plasma profiles and make
 them less stable, or unstable \cite{Sabbagh13}.
 %
@@ -87,7 +88,7 @@ plasmas for future fusion power-producing tokamak operation (including ITER
 devices can generate electromagnetic forces and heat loads large enough to
 damage device components.
 %
-This makes disruption avoidance by any means, including control of the plasma
+This makes disruption avoidance by including control of the plasma
 rotation, particularly important.
 %
 Control systems are therefore needed to evolve the plasma
@@ -99,7 +100,7 @@ events.
 The present work defines a model-based algorithm for plasma rotation control based on experimental data from the National Spherical Torus Experiment (NSTX) \cite{Ono00} that measures the rotational (toroidal) momentum transport in the tokamak. Data-driven modeling techniques have been successfully used in the past to model plasma transport dynamics for active control design in fusion reactors \cite{Moreau13, Boyer133, Boyer144, Barton12}. The uniqueness of this work is the development of a one-dimensional partial differential equation model that is not computationally expensive so it may be implemented for real-time control.  
 The present simplified model of plasma momentum transport retains the most important elements of the plasma momentum balance and therefore reproduces the plasma rotation evolution of experiments.
  
-Once this model is satisfactory, a further step consists of applying a spectral decomposition method in order to reduce significantly its dimension. The momentum force balance equation used to model the NSTX rotation profile evolution is then used in conjunction with a Bessel spectral decomposition method for application of rotation control in realtime. Model order reduction as performed in the present work is common in control design and can be performed is many ways including simple truncation of the underlying basis function expansion, or more complex techniques such as balanced truncation \cite{Moore81} that perform a more sophisticated change of coordinates. The resulting reduced model is used to design a controller that then can be applied to the original more complex model. The advantage of this approach is having a low order controller, easier to tune and design.
+Once the model is satisfactorily developed, a further step consists of applying a spectral decomposition method in order to reduce significantly its dimension. The momentum force balance equation used to model the NSTX rotation profile evolution is then used in conjunction with a Bessel spectral decomposition method for application of rotation control in realtime. Model order reduction as performed in the present work is common in control design and can be performed is many ways including simple truncation of the underlying basis function expansion, or more complex techniques such as balanced truncation \cite{Moore81} that perform a more sophisticated change of coordinates. The resulting reduced model is used to design a controller that then can be applied to the original more complex model. The advantage of this approach is having a low order controller, easier to tune and design.
  
 There is an abundant literature on plasma control such as kinetic profile control (density and temperature) \cite{Schuster02, Boyer11}, burn control \cite{Schuster01, Schuster02-2, Schuster02-3, Vitela98, Boyer12}, toroidal current profile control \cite{Boyer133, Boyer144, Barton12, Ou09, Ebrahimi04}, direct control of tearing modes \cite{Welander13, Volpe09} and resistive wall modes \cite{Sabbagh06,Sabbagh13}. Rotation control in tokamaks has been demonstrated using momentum input from injected neutral beams (NBI) as an actuator \cite{Scoville07}.  A new and unique aspect of the present work is the use of non-axisymmetric (three-dimensional) magnetic fields as another actuator in closed-loop feedback control to supplement the neutral beam actuator. Rotation alteration by non-resonant, three-dimensional magnetic fields allows more precise, continuous control of the plasma rotation alteration than NBI, as the momentum delivered by the latter occurs in significantly large, discrete increments.
 
@@ -129,14 +130,13 @@ Using the work of Goldston \cite{Goldston86}  and Callen  \cite{Callen09}, the a
 The left-hand side of the equation above represents the temporal change in the plasma toroidal angular momentum and the right-hand side terms denote respectively the one-dimensional fluid viscous term, pinch term, momentum loss due to charge exchange and field ripple, and the torque inputs (i.e., neutral beam injection and neoclassical toroidal viscosity). $R$ is a major radial coordinate, $\partial V/\partial\rho$ is the differential flux surface volume, $\chi_\phi$ is the perpendicular (to the equilibrium magnetic field) momentum diffusivity, and $\tau_{\phi c x}$ and $\tau_{c\delta}$ are the time scales of the local momentum loss associated with charge-exchange and field ripple. $n_i$ is the particle density and $m_i$ is the particle mass for each particle species, but for simplicity, only the main plasma ion species (deuterium) are considered in the dynamics.
 
 It is assumed that the plasma cross-sectional shape is well controlled by a separate control loop, therefore $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, and $\partial V/\partial \rho$ are held fixed.  Hence, curve-fits from time-averaged values of these functions (4th and 5th order polynomials; cubic spline interpolation) from TRANSP analysis of an experimental plasma are used as approximations.  
-
 Representative data for a plasma discharge (133367) is shown in Figures~\ref{fig:geofunc}(\emph{a}), \ref{fig:geofunc}(\emph{b}) and \ref{fig:geofunc}(\emph{c}) respectively.  As it can be seen, the temporal fluctuations of these variables are small. Hence taking the time-average values or even the fixed values at an adequately chosen time ($t = 0.65 s$) is considered to be a close approximation. 
 \begin{figure} 
 \includegraphics{imene_figs/fig1a} \hspace{-3em}\raisebox{7.7em}{(a)} \\
 \includegraphics{imene_figs/fig1b} \hspace{-3em}\raisebox{7.7em}{(b)} \\
 \includegraphics{imene_figs/fig1c} \hspace{-3em}\raisebox{7.7em}{(c)} \\[-.4em]
 \includegraphics{imene_figs/fig1d} \hspace{-3em}\raisebox{9.7em}{(d)}
-\caption{Functions describing the shape of the geometrical properties: $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, $\partial V/\partial \rho$ and  the mass density $ \sum_i n_i m_i $ from a TRANSP analysis of plasma discharge 133367.  The shaded region represents the value of the function spanned over time interval $(0.45-0.92)$ seconds . The time-average values are shown by the black dashed line (-~-), the fixed time values and its curve-fit are shown by the solid blue lines (-) and the red dots (o) respectively.}
+\caption{Functions describing the radial profiles of the geometrical properties: $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, $\partial V/\partial \rho$ and  the mass density $ \sum_i n_i m_i $ from a TRANSP analysis of plasma discharge 133367.  The shaded region represents the value of the function spanned over time interval $(0.45-0.92)$ seconds . The time-average values are shown by the black dashed line (-~-), the fixed time values and its curve-fit are shown by the solid blue lines (-) and the red dots (o) respectively.}
 \label{fig:geofunc}
 \end{figure}
 
@@ -169,9 +169,9 @@ The two boundary conditions are chosen consistent with experimental observations
 \label{bc0}
 \end{equation}
 
-This data driven model, defined here as a combination of fundamental physics models with quasi static variables fitted to experimental data,  is taken without any temporal dependency on the density  for simplicity, the same is considered for the diffusion coefficient $\chi_\phi$. There are no direct measurements of $\chi_\phi$ inside the tokamak, this quantity has to be reconstructed: during a run of experiments where $\omega$ is measured, TRANSP is able from these measurements to compute an adequately chosen model for  $\chi_\phi$. 
+This data driven model, defined here as a combination of fundamental physics models with quasi static variables fitted to experimental data,  is taken without any temporal dependency on the density  for simplicity, the same is considered for the diffusion coefficient $\chi_\phi$. There are no direct measurements of $\chi_\phi$ inside the tokamak, this quantity has to be reconstructed during an experiment where $\omega$ is measured, TRANSP is able from these measurements to compute $\chi_\phi$. 
 
-Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ calculation from a particular run (plasma discharges number 133775). This run is identical to the plasma discharge number 133367 except that it does not have an applied non-axisymmetric field, and therefore $T_\textrm{\tiny NTV} = 0$. This feature is very important because each dissipation effect needs to be considered separately from each source in the model. Therefore, the data driven model will use the $\chi_\phi$ of this former plasma discharge (133775) as its momentum diffusivity coefficient reference.
+Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ from a particular run (plasma discharge number 133775). This run is identical to the plasma discharge number 133367 except that it does not have an applied non-axisymmetric field, and therefore $T_\textrm{\tiny NTV} = 0$. This feature is very important because each dissipation effect needs to be considered separately from each source in the model. The data driven model will use the $\chi_\phi$ of discharge (133775) as its momentum diffusivity coefficient reference.
 
 
 \begin{figure}
@@ -186,7 +186,7 @@ The approach here is: given a desired plasma rotation profile that the operator 
 
 \subsection{Actuator models}
 
-In order to control the toroidal momentum of the plasma in a spherical tokamak, we consider the use of two actuator mechanisms, namely, the neutral beam injection (NBI) and the neoclassical toroidal viscosity (NTV). The neutral beams are the main sources of momentum for the plasma and the NTV actuator is primarily used as a source of drag on the plasma. For NSTX, $T_\textrm{\tiny NBI}$ is strongest  in the plasma core, whereas $T_\textrm{\tiny NTV}$ is strongest further out in the plasma. The momentum diffusivity $\chi_\phi$ allows transport of the momentum across these plasma regimes on the momentum diffusion timescale of about $0.1\,s$ in NSTX H-mode plasmas.
+In order to control the toroidal momentum of the plasma in a spherical tokamak, we consider the use of two actuator mechanisms, namely, the neutral beam injection (NBI) and the neoclassical toroidal viscosity (NTV). The neutral beams are the main sources of momentum for the plasma and the NTV actuator is primarily used as a source of drag on the plasma. For NSTX, $T_\textrm{\tiny NBI}$ is strongest  in the plasma core, whereas $T_\textrm{\tiny NTV}$ is strongest further out in the plasma. The momentum diffusivity $\chi_\phi$ allows transport of the momentum across these plasma regions on the momentum diffusion timescale of about $0.1\,s$ in NSTX H-mode plasmas.
 
 
 \subsubsection{Neutral Beam Injection (NBI) actuator model}
@@ -205,7 +205,7 @@ In NSTX, neutral beam injection is the main method to produce positive torque to
 \end{figure}
 
 
-A differential-equation model is introduced to relate the input power to the generated torque.  First, we start by writing the NBI torque as a product of the spatial average of the torque, $\overline{T}_\textrm{\tiny{NBI}}(t) \equiv \textrm{avg}_\rho T_\textrm{\tiny{NBI}}(t,\rho)$, and a function, $F_\textrm{\tiny{NBI}}(\rho)$, that represents the spatial profile
+A differential-equation model is introduced to relate the input power to the generated torque.  First, we approximate the NBI torque as a product of the spatial average of the torque, $\overline{T}_\textrm{\tiny{NBI}}(t) \equiv \textrm{avg}_\rho T_\textrm{\tiny{NBI}}(t,\rho)$, and a function, $F_\textrm{\tiny{NBI}}(\rho)$, that represents the spatial profile
 \begin{equation}
    T_\textrm{\tiny{NBI}}(t,\rho) = \overline{T}_\textrm{\tiny{NBI}}(t) F_\textrm{\tiny{NBI}}(\rho),
 \label{eq5}
@@ -230,11 +230,11 @@ The spatial average of the torque $\overline{T}_\textrm{\tiny{NBI}}(t)$ is relat
    + \frac{\overline{T}_\textrm{\tiny{NBI}}}{\tau_\textrm{\tiny{NBI}}}  = \kappa_\textrm{\tiny{NBI}} P_\textrm{\tiny{NBI}}(t).
    \label{eq:nbi_time}
 \end{equation}
-Here $\tau_\textrm{\tiny{NBI}}$ is the exponential slowing down time of the fast neutral beam particles to impart energy to the bulk plasma and $\kappa_\textrm{\tiny{NBI}}$ is a scalar used to normalize the neutral beam power $P_{NBI}$.  
-This  power allows variation of the toroidal momentum with certain  technical limitations such as its maximum value cannot go over 6\,MW.
-Figure~\ref{fig:Fnbi}(\emph{b}) represents the solution of equation~(\ref{eq:nbi_time}) where the source ($P_\textrm{\tiny{NBI}}$) is fixed to 6\,MW or taken from TRANSP analysis, and compares it directly with the spacial averaging of the experimental NBI torque when the three NBI sources are on.
+Here $\tau_\textrm{\tiny{NBI}}$ is the approximate slowing down time of the fast neutral beam particles to impart energy to the bulk plasma and $\kappa_\textrm{\tiny{NBI}}$ is a scalar used to normalize the neutral beam power $P_{NBI}$.  
+This  power allows variation of the toroidal momentum within certain constraints such as its maximum value cannot go over 6\,MW.
+Figure~\ref{fig:Fnbi}(\emph{b}) represents the solution of equation~(\ref{eq:nbi_time}) where the source ($P_\textrm{\tiny{NBI}}$) is fixed to 6\,MW taken from TRANSP analysis, and compares it directly with the spacial averaging of the experimental NBI torque when the three NBI sources are on.
 
-Although there is one neutral beam line, and three NBI sources, each with a slightly different aiming angle into the torus in the NSTX device, for simplicity these beams are considered as a single torque input.  When required, this assumption may be removed to generate three different torque inputs as functions of three power inputs.  For the current analysis, we only use one power input and one torque output to account for the neutral beam injection.
+Although there is one neutral beam line, and three NBI sources, each with a slightly different aiming angle into the torus in the NSTX device, for simplicity these beams are considered as a single torque input.  When required, this assumption may be removed to generate three different torque inputs as functions of three power inputs.  For the present analysis, we only use one power input and one torque output to account for the neutral beam injection.
 
 The performance of this neutral beam injection torque model is examined and compared with the more elaborate Monte Carlo modeling of the neutral beam torque in TRANSP analysis in Figure~\ref{fig:Fnbi}. The simpler model described above for use in the controller agrees sufficiently well with the TRANSP simulation analysis.
 %\begin{figure}
@@ -293,7 +293,7 @@ Using the experimental rotation profile, the modeled NTV torque is shown in Figu
 
 \subsection{Testing and comparing the model}
 
-In this subsection, the rotation evolution generated by the data-driven model using a specific discharge is compared first to TRANSP analysis of the same discharge. Second, the same data-driven model is compared to TRANSP analysis of a different discharge using analogous inputs of the new discharge in the model to demonstrate that the qualitative and quantitative behavior of the rotational plasma momentum can be captured.  The models are integrated in time based on the method of \cite{Skeel90} for  the spatial discretization of parabolic equations in one space variable and are computationally inexpensive due to the one-dimensional nature of the model.  This is an important point for control in general and real-time feedback control in particular. 
+In this subsection, the rotation evolution generated by the data-driven model using a specific discharge is compared first to TRANSP analysis of the same discharge. Second, the same data-driven model is compared to TRANSP analysis of a different discharge using analogous inputs of the new discharge in the model to demonstrate that the qualitative and quantitative behavior of the plasma momentum can be captured.  The models are integrated in time based on the method of \cite{Skeel90} for  the spatial discretization of parabolic equations in one space variable and are computationally inexpensive due to the one-dimensional nature of the model.  This is an important point for control in general and real-time feedback control in particular. 
 \subsubsection{Model vs TRANSP for the same plasma discharge}
 Given two points of measurements of rotation (outputs), one near the core, the other one towards the edge of the tokamak (more details in the next section); the model is first run with only the NBI actuator on ($6$\,MW), then at $t=0.5$\,s, the NTV actuator is turned on. 
 
@@ -370,7 +370,7 @@ This Bessel decomposition is now applied on the simplified model defined by equa
 \section{Linear plasma rotation control}
  \label{LRPC}
  
- The purpose of this section is to demonstrate that standard model-based control techniques may be used to guide an experimental plasma rotation profile to track a desired reference. Some approaches on how controllers can be designed to achieve a desired shape with a reasonable response time are presented in the following sections.
+ The purpose of this section is to demonstrate that standard model-based control techniques may be used to guide an experimental plasma rotation profile to track a desired reference. Some approaches on how controllers can be designed to achieve a desired profile with a reasonable response time are presented in the following sections.
  
  Recall that the two actuators available to the controller are the (NBI) beams power and the coil current producing NTV.
 In this case, a state-space realization is derived and linear quadratic regulators are used to design a feedback controller that is optimal in minimizing a prescribed quadratic cost function (details are explained below).
@@ -602,13 +602,13 @@ The goal of the simulations is to test the controller first on the simplified re
 \subsection{Actuator constraints}
 \label{constraints}
 
-Both actuators (NTV coil current and NBI beam power) have constraints that need to be satisfied when applied on the real device (NSTX). Some of these constraints are made for the safety of the operations, some of them reflect the practicability and the feasibility of some requests to the device. The controller will mimic some of these constraints which will be added to the dynamics equations.
+Both actuators (NTV coil current and NBI beam power) have constraints that need to be satisfied when applied on the real device (NSTX). Some of these constraints are made for the safety of the operations, some of them reflect the practicability and the feasibility of some requests to the device. The constraints will be added to the dynamics equations.
 
 The coil current will be constrained between 0 and 3000 amperes.
 The coil current response is fast compared to the dynamics of the system that it can be assumed to be applied instantaneously.
 
-Although we have so far been treating the NBI actuator as a single source outputting between 2 and 6\,MW of power, it is actually composed of 3 beams. Each beam can either be ON and produce 2\,MW of power or OFF and produce 0\,MW.
-In addition, each beam can only be switched ON or OFF a maximum of 20 times per plasma discharge to prevent device fatigue issues, and there is a refractory period of 10\,ms after each switch during which the beam cannot be switched again.
+Although we have so far been treating the NBI actuator as a single source outputting between 2 and 6\,MW of power, it is actually composed of 3 beams. Each beam can either be on and produce 2\,MW of power or off and produce 0\,MW.
+In addition, each beam can only be switched on or off a maximum of 20 times per plasma discharge to prevent device fatigue issues, and there is a refractory period of 10\,ms after each switch during which the beam cannot be switched again.
 Due to diagnostic considerations, one NBI source is typically always on, and so the overall injected power is considered to be between $2$ and $6$ MW here.
 
 These physical restrictions constrain the model and controller to be discrete and to use Pulse Width Modulation (PWM) for the beam power actuation in order to obtain control requested values between 2 and 6\,MW.
@@ -630,7 +630,7 @@ The discretized controller is first applied to the reduced-order model, consider
 \end{figure}
 
 
-Figure~\ref{fig:rot18} represents the time evolution of the rotation in the model as it evolves toward the target values and its estimate (from the observer) at 4 different times: $0.5$\,s (Controller ON), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. It shows also where the two sensors are placed, and it can be noticed that the first targeted profile defined in Figure~\ref{fig:rot11} is reached in less than $0.1$\,s. The controller is applied on the reduced-order model at $0.5$\,s.
+Figure~\ref{fig:rot18} represents the time evolution of the rotation in the model as it evolves toward the target values and its estimate (from the observer) at 4 different times: $0.5$\,s (Controller on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. It shows also where the two sensors are placed, and it can be noticed that the first targeted profile defined in Figure~\ref{fig:rot11} is reached in less than $0.1$\,s. The controller is applied on the reduced-order model at $0.5$\,s.
 \begin{figure}
 \centering
 \includegraphics{imene_figs/fig15} % Goum20n 
@@ -638,7 +638,7 @@ Figure~\ref{fig:rot18} represents the time evolution of the rotation in the mode
 \label{fig:rot20}
 \end{figure}    
 
-Figure~\ref{fig:rot20} represents the time evolution of the rotation measurement at the two sensor points located at the core and towards the edge of the plasma respectively.  
+Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement at the two sensor points located at the core and towards the edge of the plasma respectively.  
 
 
 
@@ -652,8 +652,8 @@ Figure~\ref{fig:rot20} represents the time evolution of the rotation measurement
 
 Figure~\ref{fig:rot19} represents the requested inputs (coil current and overall beam power) needed to reach the desired profile of Figure~\ref{fig:rot18}. It can be noticed that the current does not saturate whereas the beam power does.
 
-Because the initial profile (profile \#(1) in Figure~\ref{fig:rot18}) before turning the controller ON, is above the targeted profile  (profile \#(4) in Figure~\ref{fig:rot18}), and the difference between the two profiles is higher towards the core of the plasma (where the beam power acts), the controller tries to first push the power down starting from $6$\,MW at the initial state before controlling, up to $2$\,MW when it hits saturation. The green dashed line in Figure~\ref{fig:rot19} shows how the controller would actuate the beam power if no saturation was effecting. During the rapid decrease of the beams power, the controller increases the coil current in order to increase the drag and allows a quicker descent action towards the edge of the desired profile.  
-The controller and the actuators, when they can be activated instantaneously, enable the rotation profile to reach its target about 2 times faster (about 60\,ms) compared to the momentum diffusion time (about 100\,ms).
+Because the initial profile (profile \#(1) in Figure~\ref{fig:rot18}) before turning the controller ON, is above the targeted profile  (profile \#(4) in Figure~\ref{fig:rot18}), and the difference between the two profiles is higher towards the core of the plasma (where the beam power acts), the controller tries to first push the power down starting from $6$\,MW at the initial state before controlling, up to $2$\,MW when it hits saturation. The green dashed line in Figure~\ref{fig:rot19} shows how the controller would apply the beam power if no saturation was in effect. During the rapid decrease of the beams power, the controller increases the coil current in order to increase the drag and forces rapid deceleration towards the edge of the plasma.  
+The controller and the actuators, when they can be activated instantaneously, enable the rotation profile to reach its target about 2 times faster (about 60\,ms) than the momentum diffusion time (about 100\,ms).
 
 \subsection{Computational approach for TRANSP}
 In order to predict the toroidal rotation for NSTX, the TRANSP code running in predictive mode is used for a given beam power and coil current. It also takes as inputs the time histories of the plasma boundary shape, plasma current, electron and ion (Chang-Hinton model \cite{Changhinton}) temperature and density profiles and the momentum diffusivity coefficient.
@@ -665,7 +665,7 @@ The discretized controller is now applied to the reduced-order model and the TRA
 
 At the beginning of each duty cycle, the controller sets the requested power. During the duty cycle, the beams switch ON and OFF at most once to minimize the number of switches. Because of this and the 10\,ms refractory period, the exact requested power cannot always be met.
 
-To compare output results for different duty cycle durations, durations greater and smaller than 10\,ms are chosen. The longer the duty cycle, the better for the device because it means less commands switches so less fatigue, but a longer duration introduces a longer controller lag which impairs performance.
+Durations greater and smaller than 10\,ms are chosen to compare output results for different duty cycle durations. The longer the duty cycle, the better for the device because it means less commands switches so less fatigue, but a longer duration introduces a longer controller lag which impairs performance.
   
 \begin{figure}
 	\centering
@@ -682,7 +682,7 @@ To compare output results for different duty cycle durations, durations greater 
 	\label{fig:rot15}
 \end{figure}
 
-Figure~\ref{fig:rot14} compares the rotation measurements when the PWM controller is applied to both the reduced-order model and the TRANSP predictive model in order to reach two targets.
+Figure~\ref{fig:rot14} compares the rotation measurements when the PWM controller is applied to both the reduced-order model and the TRANSP predictive model in order to reach two targets, one at $t = 0.5$s, and the other starting at $t=0.7$s.
 Before $t=0.5$\,s, both models are not controlled (open loop), the measurements are already shown to be the steady-state values shown in Figure~\ref{Goum12}.
 At $t = 0.5$\,s, the controller is turned on (closed loop), and the goal is to reach the first target profile measurement points defined by the two red dots in Figure~\ref{fig:rot11}. At $t = 0.7$\,s, the  target profile changes to the second one which is defined by the two blue dots in Figure~\ref{fig:rot11}.
 The green line represents the reduced-order model outputs, the blue line represents the TRANSP model. The oscillations are due to the modulations that occurs on each of the beam power source. The total beam power is represented in Figure~\ref{fig:rot15} (right). The coil current in this case (Figure~\ref{fig:rot15} left) changes to compensate for when the beam power is too high in order to decrease the toroidal rotation and thus limit the rotation overshoot.
@@ -710,7 +710,6 @@ The reduced-order model in both cases is very close to the TRANSP which again sh
 
 
 \section{Summary and conclusions}
-The main motivation of this work is model-based control of plasma rotation in tokamaks.
 In the above plasma control demonstrations, a simple reduced order model has been built to capture the rotational toroidal momentum balance, applied specifically to the NSTX device. The neutral beam injection and the neoclassical toroidal viscosity are considered in this model as actuators. The output from the present model have been compared with analysis from a predictive model of NSTX and were found to be in good agreement.
 Based on this simplified model, a complete feedback control design using optimal control techniques as shown above and enables controlling the plasma about a desired profile. This reduced-order controller was then tested using the NSTX predictive model and enabled the rotation profile to reach the desired profile.
 
@@ -718,7 +717,7 @@ Generally, broader toroidal rotation profile brings more stability to the plasma
 Furthermore, while only the $n = 3$ applied field configuration was considered for the NTV actuator, it is possible to include different applied field spectra which can change the NTV torque profile. For example, an $n=1$ field configuration can allow a deeper penetration of this torque profile which will expand the capability of rotation control.
 
 The present controller was designed using models tuned to match experimental data. A next step could be to develop control-oriented models directly from simulations. This capability would have a large impact: fewer experiments would be needed to calibrate the models/controllers, and more importantly, one could predict actuator requirements (e.g., amplitude, bandwidth, latency), and any inherent performance limitations for future machines such as ITER.
-These control-oriented models such as those being developed in TRANSP for NSTX-Upgrade will be tested for their robustness in producing greater range of target profile shapes in order to maintain and optimize plasma stability for the worst case scenarios. 
+These control-oriented models such as those being developed using TRANSP for NSTX-Upgrade will be tested for their robustness in producing greater range of target profile shapes. 
 
  
 \ack 
