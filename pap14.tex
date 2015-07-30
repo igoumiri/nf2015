@@ -127,11 +127,8 @@ measured in experiments.
 Once the model is satisfactorily developed, a further step consists of applying
 a spectral decomposition method, linearizing the equation about an equilibrium
 and projecting onto a subspace spanned by Bessel functions, in order to obtain
-an approximate linear model consisting of just 10 ordinary differential
+an approximate linear model consisting of just 5 ordinary differential
 equations.
-%
-\remark{Imene, is this the correct number?  It's not clear to me what the value of
-  $n$ is in section 3.2.}
 %
 The resulting reduced model is then used to design a controller using standard
 techniques from optimal control.
@@ -169,20 +166,14 @@ Using the work of Goldston \cite{Goldston86}  and Callen  \cite{Callen09}, the a
   - \sum_i n_i m_i \left< R^2\right> \omega \left( \frac{1}{\tau_{\phi cx}} + \frac{1}{\tau_{c\delta}}\right) + \sum_j T_j.
 	\label{eq:full1}
 \end{multline}
-The left-hand side of the equation above represents the temporal change in the plasma toroidal angular momentum and the right-hand side terms denote respectively the one-dimensional fluid viscous term, pinch term, momentum loss due to charge exchange and field ripple, and the torque inputs (i.e., neutral beam injection and neoclassical toroidal viscosity). $R$ is a major radial coordinate, $\partial V/\partial\rho$ is the differential flux surface volume, $\chi_\phi$ is the perpendicular (to the equilibrium magnetic field) momentum diffusivity, and $\tau_{\phi c x}$ and $\tau_{c\delta}$ are the time scales of the local momentum loss associated with charge-exchange and field ripple. $n_i$ is the particle density and $m_i$ is the particle mass for each particle species, but for simplicity, only the main plasma ion species (deuterium) are considered in the dynamics.
-%
-\remark{Need to say what $\omega$ and $T_j$ are---these are actually the most
-  important quantities in your equation, for our purposes at least.}
+The left-hand side of the equation above represents the temporal change in the plasma toroidal angular momentum and the right-hand side terms denote respectively the one-dimensional fluid viscous term, pinch term, momentum loss due to charge exchange and field ripple, and the torque inputs (i.e., neutral beam injection and neoclassical toroidal viscosity). $R$ is a major radial coordinate, $\partial V/\partial\rho$ is the differential flux surface volume, $\chi_\phi$ is the perpendicular (to the equilibrium magnetic field) momentum diffusivity, $\tau_{\phi c x}$ and $\tau_{c\delta}$ are the time scales of the local momentum loss associated with charge-exchange and field ripple, $T_j$ represents the various torques acting on the system, $n_i$ is the particle density and $m_i$ is the particle mass for each particle species, but for simplicity, only the main plasma ion species (deuterium) are considered in the dynamics.
 
 It is assumed that the plasma cross-sectional shape is well controlled by a
 separate control loop; therefore $\left< R^2 \right>$, $\left< R^2
   (\nabla\rho)^2 \right>$, and $\partial V/\partial \rho$ are held fixed.
-Curve-fits from time-averaged values of these functions (4th- and 5th-order
-polynomials; cubic spline interpolation) from TRANSP analysis of an experimental
+Curve-fits from time-averaged values of these functions (4th- or 5th-order
+polynomials or cubic spline interpolation depending on which one gives the smoothest fit) from TRANSP analysis of an experimental
 plasma are used as approximations.
-%
-\remark{Which is it?  Polynomial fits or cubic spline interpolation?  Be
-  specific.}
 %
 Representative data for a plasma discharge (133367) is shown in
 Figures~\ref{fig:geofunc}(\emph{a}), \ref{fig:geofunc}(\emph{b}) and
@@ -196,7 +187,7 @@ considered to be a close approximation.
 \includegraphics{imene_figs/fig1b} \hspace{-3em}\raisebox{7.7em}{(b)} \\
 \includegraphics{imene_figs/fig1c} \hspace{-3em}\raisebox{7.7em}{(c)} \\[-.4em]
 \includegraphics{imene_figs/fig1d} \hspace{-3em}\raisebox{9.7em}{(d)}
-\caption{Functions describing the radial profiles of the geometrical properties: $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, $\partial V/\partial \rho$ and  the mass density $ \sum_i n_i m_i $ from a TRANSP analysis of plasma discharge 133367.  The shaded region represents the value of the function spanned over time interval $(0.45-0.92)$ seconds . The time-average values are shown by the black dashed line (-~-), the fixed time values and its curve-fit are shown by the solid blue lines (-) and the red dots (o) respectively.}
+\caption{Functions describing the radial profiles of the geometrical properties: $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, $\partial V/\partial \rho$ and  the mass density $ \sum_i n_i m_i $ from a TRANSP analysis of plasma discharge 133367.  The shaded region represents the value of the function spanned over time interval ($0.45$--$0.92$) seconds . The time-average values are shown by the black dashed line (--~--), the fixed time values and its curve-fit are shown by the solid blue lines (---) and the red dots (o) respectively.}
 \label{fig:geofunc}
 \end{figure}
 
@@ -257,14 +248,12 @@ Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ from a particular run (p
 \end{figure}
 
 
-The approach here is as follows: given a desired plasma rotation profile that
-the operator wishes the system to reach and stabilize, take the
-simplified model~(\ref{model0}) that relies on different models of $ n  m$, NTV
-and NBI torques from a representative class of plasma discharge ($\chi_\phi$
-modeled from plasma discharge 133775), and use it to design a controller that
-will attempt to match any desired profile shape.
-%
-\remark{Should also mention linearization, and say what you linearize around.}
+The approach here is as follows: given a range of desired profiles that
+the operator wishes the system to reach and stabilize,
+take the simplified model~(\ref{model0}) that relies on different models of $ n  m$,
+NTV and NBI torques from a representative class of plasma discharge ($\chi_\phi$ modeled from plasma discharge 133775),
+linearize the model around an equilibrium whose basin of attraction contains the range of desired profiles
+and use the linearized model to design a controller that will attempt to match any target shape within this range.
 
 \subsection{Actuator models}
 
@@ -275,10 +264,7 @@ In order to control the toroidal momentum of the plasma in a spherical tokamak, 
  \label{NBIAM}
 
 In NSTX, neutral beam injection is the main method to produce positive torque to increase plasma rotation, which is achieved  by injecting high-speed neutral atoms into the center of the plasma. 
-Neutral atoms are able to cross the confining magnetic field of the tokamak without being deflected, and are ionized in the plasma via collisions with ions and electrons. The fast ions that are generated are also confined in the magnetic field and are able to exchange their energy to plasma ions and electrons. Typical injection acceleration voltages
-\remark{Are these really voltages? I don't know what an ``acceleration voltage''
-is, but maybe this is standard.  Dave?}
-are in the range of 50\,keV to 130\,keV and for comparison, in NSTX, the peak plasma ion thermal temperature reaches up to $1.5$ keV.
+Neutral atoms are able to cross the confining magnetic field of the tokamak without being deflected, and are ionized in the plasma via collisions with ions and electrons. The fast ions that are generated are also confined in the magnetic field and are able to exchange their energy to plasma ions and electrons. Typical injection acceleration voltages are in the range of 50\,keV to 130\,keV and for comparison, in NSTX, the peak plasma ion thermal temperature reaches up to $1.5$ keV.
 Figure~{\ref{NBI_pics}} shows the planned neutral beam injection for the present
 upgrade of NSTX. In the present study, we consider the three neutral beam
 sources injected from the injector shown on the left of the figure.
@@ -287,10 +273,10 @@ input, as we describe below.
 
 \begin{figure}
 \begin{tabular}{cc}
-\includegraphics[width=\linewidth]{imene_figs/pic_NBI1} \\
-\includegraphics[width=\linewidth]{imene_figs/pic_NBI2}
+\includegraphics[width=\linewidth]{imene_figs/fig3a} \\
+\includegraphics[width=\linewidth]{imene_figs/fig3b}
 \end{tabular}
-\caption{Illustration of the neutral beam injection (NBI) devices for NSTX-U with an inside view from the top of the tokamak (left) and outside view (right). }
+\caption{Illustration of the neutral beam injection (NBI) devices for NSTX-U with an inside view from the top of the tokamak (top) and outside view (bottom).}
 \label{NBI_pics}
 \end{figure}
 
@@ -307,33 +293,27 @@ F_\text{NBI}(\rho) = a_\text{NBI} \exp\left( - \frac{\rho^2}{2\sigma^2_\text{NBI
 \end{equation}
 %
 \begin{figure}
-\includegraphics{imene_figs/fig4a} \hspace{-2.7em}\raisebox{10.2em}{(a)} \\[-1em] % Goum7
-\includegraphics{imene_figs/fig4b} \hspace{-2.7em}\raisebox{3.8em}{(b)}          % Goum8
+\includegraphics{imene_figs/fig4a} \hspace{-2.7em}\raisebox{12.2em}{(a)} \\[-1em] % Goum7
+\includegraphics{imene_figs/fig4b} \hspace{-2.7em}\raisebox{4.2em}{(b)}          % Goum8
 \caption{(a) Spatial profile for the neutral beam torque ($F_\text{NBI} $) for
   plasma discharge 133367.  The shaded region represents the values for times
   ranging from 0.45 to 0.92~seconds: time averaged values (--~--); values at the
-  fixed time $t=?$ \remark{Include the time here.}  (\textcolor{blue}{---}); and
-  the fit~\eqref{eq6} (\textcolor{red}{$\cdot$}).
+  fixed time $t=0.6$s  (\textcolor{blue}{--~$\cdot$}); and
+  the fit~\eqref{eq6} (\textcolor{red}{---}).
   %
   (b) Spatial average of the torque generated for the same plasma discharge
   ($ \overline{T}_\text{NBI}$), showing the TRANSP analysis
   (red) and the model~\eqref{eq:nbi_time} (black), with
-  $\tau_\text{NBI} \approx 0.01\,\text{s}$ and  $\kappa_\text{NBI} \approx
-  2\times10^{-6} $. \remark{Give the exact values you used in the model.}
-\remark{I also think it would be good to make the colors more consistent: in the
-top plot, the red dashed is the model, and the black and blue are TRANSP, while
-in the bottom plot, black is the model and red is TRANSP.  Also, it's usually
-better to have a model or analytical result plotted as a solid curve, and
-experimental/numerical data as data points, rather than the other way around, as in (a).}}
+  $\tau_\text{NBI} = 0.01\,\text{s}$ and  $\kappa_\text{NBI} =
+  2\times10^{-6} $.}
 \label{fig:Fnbi}
 \end{figure}
 %
 Figure~{\ref{fig:Fnbi}}(\emph{a}) shows the deduced profile $F_\text{NBI}$ of
 the torque generated by the neutral beams, where the parameters
-$a_\text{NBI}\approx 1$
-and~$\sigma_\text{NBI}\approx 0.25$ were determined by a least-squares fit to the
+$a_\text{NBI}= 7.9090$
+and~$\sigma_\text{NBI}= 0.2219$ were determined by a least-squares fit to the
 time-averaged data.
-\remark{I'd suggest either giving the exact values, or leaving out the values altogether.}
 
 In our model, the spatial average of the torque $\overline{T}_\text{NBI}(t)$ is
 related to the power input, $P_\text{NBI}(t)$, by a first-order lag:
@@ -368,7 +348,7 @@ Tokamaks usually have error fields or magnetohydrodynamic (MHD) activities prese
 
 \begin{figure}
 	\centering
-   \includegraphics{imene_figs/pic_NTV}
+   \includegraphics{imene_figs/fig5}
 \caption{Model representation of the three-dimensional coils (highlighted in
   blue) used to create the magnetic field that produces NTV in the NSTX device.}
   \label{pic_NTV}
@@ -381,15 +361,9 @@ For the current one-dimensional toroidal momentum model, we aim to model the mom
 where $K$ is a constant and $G$ is a Gaussian function.
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig7a} \adjustbox{raise=10.2em, lap=-16em}{(a)} % current
-	\includegraphics{imene_figs/fig7b} \adjustbox{raise=10.2em, lap=-16em}{(b)} % gauss1
-	\caption{(a) Coil current $I(t)$ \remark{Imene, is this correct, or is this
-            $I^2$?} for plasma discharges 133367, smoothed and unsmoothed; 
-          (b) spatial profile model $G$ of the neoclassical toroidal
-          viscosity, which is a Gaussian function. The green line represents
-          the model from CHERS data and  blue lines represent the smoothed data.
-\remark{I think (b) can be removed: I don't see what it adds.  Also, in (a), the
-axis label should be ``Coil current'', not ``Coils current.''}}
+	\includegraphics{imene_figs/fig6} \adjustbox{raise=10.2em, lap=-16em}{} % current
+	\caption{ Coil current $I(t)$ for plasma discharges 133367, smoothed and unsmoothed;
+          The green line represents the model from CHERS data and  blue lines represent the smoothed data.}
 	\label{fig:current}
 \end{figure}
 The present model  will focus on the torque generated by the $n=3$ applied field ``configuration,'' in which the current reverses direction in each of the six neighboring coils. Other applied field configurations are possible (e.g., configurations with dominant $n = 2$ component) and have experimentally produced effective NTV as well \cite{Sabbagh10}.
@@ -405,19 +379,14 @@ G_\text{NTV}  (\rho) = K \,  \langle R^2 \rangle \:G(\rho),
 %
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig8} % Goum10
+\includegraphics{imene_figs/fig7} % Goum10
 \caption{3D representation of the NTV torque model~\eqref{eqn:ntv} where
   $\omega$ is taken from experimental measurements of ``fixed'' plasma discharge
   133367, and $I^2$ is as shown in Figure~\ref{fig:current}.}
 \label{TNTV3D}
 \end{figure}
 %
-and $G(\rho)$ is a Gaussian function modeled in
-Figure~{\ref{fig:current}}(\emph{b}).
-%
-\remark{I think we can take out this figure: everybody knows what a Gaussian
-  looks like; better to just give the mean and standard deviation.  That also
-  gives more information, and allows somebody else to reproduce our results.}
+and $G(\rho)$ is a Gaussian function centered towards the edge ($\mu =0.7, \sigma =0.1$).
 %
 Figure~{\ref{fig:current}}(\emph{a}) shows the current that flows into the coils
 for the plasma discharge 133367. We notice that the current is kept constant
@@ -458,21 +427,21 @@ where $L$ is a differential operator linear in each argument.  Inserting the exp
 \end{equation*}
 which is a set of $N$ coupled ordinary differential equations for the coefficients $a_m$.
 
-The parameters in the model~\eqref{model0} are determined from TRANSP analysis of plasma discharge 133367, as described in Section~\ref{MHW}.  Figure~\ref{Goum12} shows the comparison of the model with the TRANSP analysis, showing the rotation at two values, $\rho=?$ and~?.  \remark{Give the values of~$\rho$.  Also specify more details about this TRANSP run.  Is it exactly the same as 133367?  So 133367 had NTV on for part of the run?}
-
-Given two points of measurements of rotation (outputs), one near the core, the other one towards the edge of the tokamak (more details in the next section); the model is first run with only the NBI actuator on ($6$\,MW), then at $t=0.5$\,s, the NTV actuator is turned on. 
+The parameters in the model~\eqref{model0} are determined from TRANSP analysis of plasma discharge 133367, as described in Section~\ref{MHW}.  Figure~\ref{Goum12} shows the comparison of the model with the TRANSP analysis (prediction of plasma discharge 133367), showing the rotation at two values, $\rho=0.1346$ and $0.5498$.
+%
+Given two points of measurements of rotation (outputs), one near the core, the other one towards the edge of the tokamak (more details in the next section); the model and TRANSP are first run with only the NBI actuator on ($6$\,MW), then at $t=0.5$\,s, the NTV actuator is turned on for both models with the same value. 
 
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig9} % Goum12
-\caption{Two rotation measurements with NBI and NTV actuators activated at $t=0$\,s and $t=0.5$\,s respectively, comparing TRANSP analysis with fixed background (black), with the model~\eqref{model0}, with $N=4$ Bessel functions.  \remark{Recompute this result using the Bessel function model, with 4 modes (or more if it looks bad with 4 modes).  Also, I don't see the point of including the model with ``No NTV.''  What does this add?  I suggest leaving that curve out.}}
+\includegraphics{imene_figs/fig8} % Goum12
+\caption{Two rotation measurements with NBI and NTV actuators activated at $t=0$\,s and $t=0.5$\,s respectively, comparing TRANSP analysis with fixed background (black), with the model~\eqref{model0}, with $N=4$ Bessel functions (red).}
 \label{Goum12}
 \end{figure}
 
-Figure~\ref{Goum12} shows these rotation measurements for the simplified model (red dots) compared against TRANSP analysis (solid black line) when the NBI and NTV actuators are activated at $t=0$\,s and $t=0.5$\,s respectively. The blue dashed line shows the steady values reached when only NBI is activated. It shows that the model is a good approximation of the TRANSP analysis model.
+Figure~\ref{Goum12} shows these rotation measurements for the simplified model (red) compared against TRANSP analysis (solid black line) when the NBI and NTV actuators are activated at $t=0$\,s and $t=0.5$\,s respectively. The blue dashed line shows the steady values reached when only NBI is activated. It shows that the model is a good approximation of the TRANSP analysis model.
 
 
-Figure~\ref{fig10} shows how the simplified model performs for a different plasma discharge ($133743$), at conditions different from those for which the model was calibrated.  The relative error between the model \remark{Which model?  Full or reduced?} and experimental data (which is the difference between the experimental and the model rotation divided by the mean of the spatial average of the experimental rotation data) is also shown in  the same figure.
+Figure~\ref{fig10} shows how the simplified model performs for a different plasma discharge ($133743$), at conditions different from those for which the model was calibrated.  The relative error between the reduced model and experimental data (which is the difference between the experimental and the model rotation divided by the mean of the spatial average of the experimental rotation data) is also shown in  the same figure.
 
 For all the models, the initial condition is set to be the experimental rotational frequency at  time $t=0.4$\,s after the start up ($t=0$) and when the plasma reaches the H-mode.
 
@@ -483,66 +452,63 @@ This simplified model (derived plasma discharge 133367) has been extensively val
 The overall behavior of the plasma is captured qualitatively very well using the simplified model of equation~\eqref{model0} with a fixed background. 
 
 \begin{figure}
-\includegraphics{imene_figs/fig10b} % or fig10b
-\caption{Comparison of the rotational frequency $\omega$ for plasma discharge 133743, comparing TRANSP analysis (left), with the simplified model~\eqref{model0}, projected onto $N=10$ Bessel modes, and $N=4$ Bessel modes.  Also shown is the relative error between ? and ?.
-\remark{Is the error between TRANSP and Full or TRANSP and Reduced?}
-\remark{Recompute the ``Full'' model using the Bessel function method, with $N$ large enough that it looks converged; then label the ``Full'' plot $N=10$ (or however many modes you need) and the ``Reduced'' plot $N=4$.}
-}
+\includegraphics{imene_figs/fig9}
+\caption{Comparison of the rotational frequency $\omega$ for plasma discharge 133743, comparing TRANSP analysis (left), with the simplified model~\eqref{model0}, projected onto $N=40$ Bessel modes, and $N=4$ Bessel modes.  Also shown is the relative error between TRANSP and the reduced model ($N=4$).}
 \label{fig10}
 \end{figure}
 
-\remark{Delete the next section altogether, up to section 3.}
 
-\subsection{Reduced order model using Bessel functions}
-
-Among many model reduction techniques, such as singular perturbation or Hankel norm reduction methods, the projection-based method, which involves projection of a model onto a set of modes, is a widely used approach. These may be global eigenmodes of a linearized operator \cite{Akervik07}, modes determined by proper orthogonal decomposition (POD) of a set of data, or variants of POD modes \cite{Holmes12}. 
-
-It can be noticed from the mathematical structure of the momentum diffusion equation~(\ref{model0}), that the diffusion part looks like a Laplacian operator in cylindrical coordinates, thus the Bessel functions will be the natural choice for the basis. 
-
-Recall that the Bessel modes are constructed as different versions of the same Fourier-Bessel function of the first kind $J_{\alpha}$, where the argument to each version $n$ is differently scaled, according to
-\begin{equation}
-(J_{\alpha})_n (x) = J_{\alpha} \left(  \frac{ k_{\alpha,n}}{L} x \right),
-\label{defmod}
-\end{equation}
-where $ k_{\alpha,n}$ is a root, numbered $n$ associated with the Bessel Function $J_{\alpha}$.
+%\subsection{Reduced order model using Bessel functions}
 %
-\remark{The above is verbatim from the Wikipedia entry for Fourier-Bessel
-  series.  This is plagiarism, and is a major problem!  This needs to be
-  rewritten, and if there are other parts that are taken from other sources like
-  this, those need to be rewritten also.}
+%Among many model reduction techniques, such as singular perturbation or Hankel norm reduction methods, the projection-based method, which involves projection of a model onto a set of modes, is a widely used approach. These may be global eigenmodes of a linearized operator \cite{Akervik07}, modes determined by proper orthogonal decomposition (POD) of a set of data, or variants of POD modes \cite{Holmes12}. 
 %
-$L$ is a length constant assumed to equal unity as the spatial variable varies between 0 (at the core) and 1 (at the edge of the plasma). The variables $a_n$ are the assigned coefficients. The toroidal rotation $\omega$ can thus be written as 
-\begin{equation}
-\omega(\rho,t)  = \sum_{n=0}^{\infty} a_n(t) \, J_{\alpha} \left( { k_{\alpha,n}} \rho \right),
-\label{decomp}
-\end{equation}
- with
- \begin{equation}
-a_n(t) = \frac{\langle \omega(\rho,t), \left(J_{\alpha} \right)_n \rangle }{\langle  \left(J_{\alpha} \right)_n ,  \left(J_{\alpha} \right)_n   \rangle},
-\end{equation}
-and where the scalar product is defined as 
-\begin{equation}
-\langle f,g \rangle =   \int^1 _0 \rho \, f(\rho) \, g(\rho) \, d\rho.
-\end{equation}
-By matter of respecting the boundary conditions given in equation~(\ref{bc0}), we consider the particular case of $\alpha = 0$, this reduces equation~(\ref{decomp}) to
-\begin{equation}
-\omega(\rho,t)  = a_0(t) + \sum_{n=1}^{r} a_n(t) \, J_{0} \left(  k_{0,n} \rho \right),
-\end{equation}
-with
-\begin{equation}
-a_0 (t) = {2} \int^1 _0 \rho \, \omega(\rho,t) \, d\rho.
-\end{equation}
-and $r$ being the number of Bessel modes chosen to represent $\omega$.
-\remark{I don't think you should need the constant term.  In fact, if $a_0$ is nonzero, then the expansion~\eqref{decomp} will not satisfy the boundary condition at $\rho=1$ (since $J_0(k_{0,n})=0$).  Why is $a_0$ included?}
-
-This Bessel decomposition is now applied on the simplified model defined by equation~(\ref{model0}). Figure~\ref{bessel1} compares the three model simulations, one is taken from TRANSP analysis of the experimental measurement of the toroidal rotation (with varying background), the two other models are simulated in real space dimension and spectrally by projecting the original model on only 4 Bessel modes respectively in a fixed background. It can be noticed that only 4 Bessel modes are sufficient for capturing most features of the dynamics.
-\begin{figure}
-\includegraphics[width=\linewidth]{imene_figs/fig11bis} % bessel11n 
-\caption{comparison of spectral simulation of the toroidal rotation using 4 Bessel modes (right) with the full nonlinear simplified model using 60 points of discretization for plasma discharge 133367 (middle) in fixed background and the rotation from TRANSP analysis (left) in variable background.
-\remark{Not sure we need this figure.  What does this show that is not already in Figure 9?  I thought the point is that this model was calibrated on shot 133743 and run for shot 133367, then should make that point explicitly.}}
-\label{bessel1}
-\end{figure}
-
+%It can be noticed from the mathematical structure of the momentum diffusion equation~(\ref{model0}), that the diffusion part looks like a Laplacian operator in cylindrical coordinates, thus the Bessel functions will be the natural choice for the basis. 
+%
+%Recall that the Bessel modes are constructed as different versions of the same Fourier-Bessel function of the first kind $J_{\alpha}$, where the argument to each version $n$ is differently scaled, according to
+%\begin{equation}
+%(J_{\alpha})_n (x) = J_{\alpha} \left(  \frac{ k_{\alpha,n}}{L} x \right),
+%\label{defmod}
+%\end{equation}
+%where $ k_{\alpha,n}$ is a root, numbered $n$ associated with the Bessel Function $J_{\alpha}$.
+%%
+%\remark{The above is verbatim from the Wikipedia entry for Fourier-Bessel
+%  series.  This is plagiarism, and is a major problem!  This needs to be
+%  rewritten, and if there are other parts that are taken from other sources like
+%  this, those need to be rewritten also.}
+%%
+%$L$ is a length constant assumed to equal unity as the spatial variable varies between 0 (at the core) and 1 (at the edge of the plasma). The variables $a_n$ are the assigned coefficients. The toroidal rotation $\omega$ can thus be written as 
+%\begin{equation}
+%\omega(\rho,t)  = \sum_{n=0}^{\infty} a_n(t) \, J_{\alpha} \left( { k_{\alpha,n}} \rho \right),
+%\label{decomp}
+%\end{equation}
+% with
+% \begin{equation}
+%a_n(t) = \frac{\langle \omega(\rho,t), \left(J_{\alpha} \right)_n \rangle }{\langle  \left(J_{\alpha} \right)_n ,  \left(J_{\alpha} \right)_n   \rangle},
+%\end{equation}
+%and where the scalar product is defined as 
+%\begin{equation}
+%\langle f,g \rangle =   \int^1 _0 \rho \, f(\rho) \, g(\rho) \, d\rho.
+%\end{equation}
+%By matter of respecting the boundary conditions given in equation~(\ref{bc0}), we consider the particular case of $\alpha = 0$, this reduces equation~(\ref{decomp}) to
+%\begin{equation}
+%\omega(\rho,t)  = a_0(t) + \sum_{n=1}^{r} a_n(t) \, J_{0} \left(  k_{0,n} \rho \right),
+%\end{equation}
+%with
+%\begin{equation}
+%a_0 (t) = {2} \int^1 _0 \rho \, \omega(\rho,t) \, d\rho.
+%\end{equation}
+%and $r$ being the number of Bessel modes chosen to represent $\omega$.
+%\remark{I don't think you should need the constant term.  In fact, if $a_0$ is nonzero, then the expansion~\eqref{decomp} will not satisfy the boundary condition at $\rho=1$ (since $J_0(k_{0,n})=0$).  Why is $a_0$ included?}
+%
+%This Bessel decomposition is now applied on the simplified model defined by equation~(\ref{model0}). Figure~\ref{bessel1} compares the three model simulations, one is taken from TRANSP analysis of the experimental measurement of the toroidal rotation (with varying background), the two other models are simulated in real space dimension and spectrally by projecting the original model on only 4 Bessel modes respectively in a fixed background. It can be noticed that only 4 Bessel modes are sufficient for capturing most features of the dynamics.
+%
+%\begin{figure}
+%\includegraphics[width=\linewidth]{imene_figs/fig10} % bessel11n 
+%\caption{comparison of spectral simulation of the toroidal rotation using 4 Bessel modes (right) with the full nonlinear simplified model using 60 points of discretization for plasma discharge 133367 (middle) in fixed background and the rotation from TRANSP analysis (left) in variable background.
+%\remark{Not sure we need this figure.  What does this show that is not already in Figure 9?  I thought the point is that this model was calibrated on shot 133743 and run for shot 133367, then should make that point explicitly.}}
+%\label{bessel1}
+%\end{figure}
+%
 \section{Linear plasma rotation control}
  \label{LRPC}
  
@@ -642,7 +608,7 @@ It should be noted that the feedforward gain $F$  depends on the matrices $A$, $
 Figure~\ref{fig:rot11} defines our initial profile, the equilibrium profile used for the linearization and the targeted profile where the measurements are done.
 \begin{figure}
 	\centering
-\includegraphics{imene_figs/fig12} % Goum133l
+\includegraphics{imene_figs/fig11} % Goum133l
 \caption{Rotation profiles: definition of the initial profile, equilibrium profile $w_0$ used for the linearization and the desired profiles to reach $w_d$. The two points of measurement $r_d$ are shown by the two dots.}
 \label{fig:rot11}
 \end{figure}
@@ -762,7 +728,7 @@ Figure~\ref{fig:model1} shows the schematic of this general controller that comb
 		\draw[connector] (sum AW) to (AW);
 		\draw[connector] (AW) to ++(up:0.6) -| (AW out);
 		
-		\draw[green!50!black, ultra thick] (1.4,-2.8) rectangle (15.6,3.1);
+		\draw[green!50!black, ultra thick] (1.4,-2.8) rectangle (15,3.1);
 		\node[green!50!black, anchor=south, font=\large\bfseries] at (8.4,3.1) {Controller};
 	\end{tikzpicture}
 
@@ -798,10 +764,10 @@ The discretized controller is first applied to the reduced-order model, consider
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig14a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em] % Goum18ln
-	\includegraphics{imene_figs/fig14b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em] % Goum18lln
-	\includegraphics{imene_figs/fig14c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em] % Goum18llln
-	\includegraphics{imene_figs/fig14d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)} % Goum18lllln
+	\includegraphics{imene_figs/fig13a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em] % Goum18ln
+	\includegraphics{imene_figs/fig13b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em] % Goum18lln
+	\includegraphics{imene_figs/fig13c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em] % Goum18llln
+	\includegraphics{imene_figs/fig13d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)} % Goum18lllln
 	\caption{Time evolution of the rotation in the model as it evolves toward the target values and its estimate at 4 different times. The green profile is the targeted rotation profile. }
 	\label{fig:rot18}
 \end{figure}
@@ -810,7 +776,7 @@ The discretized controller is first applied to the reduced-order model, consider
 Figure~\ref{fig:rot18} represents the time evolution of the rotation in the model as it evolves toward the target values and its estimate (from the observer) at 4 different times: $0.5$\,s (Controller on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. It shows also where the two sensors are placed, and it can be noticed that the first targeted profile defined in Figure~\ref{fig:rot11} is reached in less than $0.1$\,s. The controller is applied on the reduced-order model at $0.5$\,s.
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig15} % Goum20n 
+\includegraphics{imene_figs/fig14} % Goum20n 
 \caption{Time evolution of the rotation measurement at the two sensor points. The dashed lines represents the desired measurements at these latter locations. }
 \label{fig:rot20}
 \end{figure}    
@@ -821,8 +787,8 @@ Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement at t
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig16a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
-	\includegraphics{imene_figs/fig16b} \adjustbox{raise=3.2em,lap=-2.8em}{(b)}
+	\includegraphics{imene_figs/fig15a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
+	\includegraphics{imene_figs/fig15b} \adjustbox{raise=3.2em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power and its saturation, needed to reach the 1st desired profile }
 	\label{fig:rot19}
 \end{figure} 
@@ -846,15 +812,15 @@ Durations greater and smaller than 10\,ms are chosen to compare output results f
   
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig17} % Goum14ln
+	\includegraphics{imene_figs/fig16} % Goum14ln
 	\caption{Comparison of the rotation measurements when PWM is applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.015 s$).}
 	\label{fig:rot14}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig18a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum15ln
-	\includegraphics{imene_figs/fig18b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
+	\includegraphics{imene_figs/fig17a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum15ln
+	\includegraphics{imene_figs/fig17b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power (cycle time $0.015  s$).}
 	\label{fig:rot15}
 \end{figure}
@@ -872,15 +838,15 @@ The reduced-order model in both cases is very close to the TRANSP which again sh
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig19} % Goum16ln
+	\includegraphics{imene_figs/fig18} % Goum16ln
 	\caption{Comparison of the rotation measurements when PWM applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.006 s$).}
 	\label{fig:rot16}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig20a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
-	\includegraphics{imene_figs/fig20b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
+	\includegraphics{imene_figs/fig19a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
+	\includegraphics{imene_figs/fig19b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power (cycle time $0.006 s$). }
 	\label{fig:rot17}
 \end{figure}
