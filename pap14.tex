@@ -398,6 +398,7 @@ will be~$I^2(t)$.
 Using the experimental rotation profile, the modeled NTV torque is shown in Figure~\ref{TNTV3D}.
 
 \subsection{Testing and comparing the model}
+\label{sec:test-comp-model}
 In order to numerically simulate the partial differential equation~\eqref{model0}, we use a spectral method, projecting onto suitably chosen basis functions, to obtain a system of ordinary differential equations.  In particular, we write
 \begin{equation}
 \omega(\rho,t)  = \sum_{n=1}^{N} a_n(t) \varphi_n(\rho),
@@ -554,7 +555,7 @@ This system of equations can be represented in the standard state-space form:
 	\dot{x} &= A x + B u, \label{eqn:state-space1} \\
 	y &= C x, \label{eqn:state-space2} 
 \end{align}
-by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega$ on the $r$ chosen Bessel functions, the perturbed state $x$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $ \left[ a_{0}, a_{1}, ..., a_{r}  \ \ \overline{T}_\text{NBI}(t) \right]$.
+by using the spectral decomposition described in Section~\ref{sec:test-comp-model} and projecting the partial state $ \omega$ on the $r$ chosen Bessel functions, the perturbed state $x$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $ \left[ a_{0}, a_{1}, ..., a_{r}  \ \ \overline{T}_\text{NBI}(t) \right]$.
 %
 %
 $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
