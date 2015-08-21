@@ -645,28 +645,28 @@ Then the expected variance of the error in the state estimate is obtained by set
 	L = P C^T W^{-1},
 \end{equation}
 where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T W^{-1} C P + V = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
-In this paper we use $V=10^{4}I$ and $W=10^{4}I$, corresponding to noise levels of approximately 1\% of the magnitude of our states and outputs.
-
+In this paper, we use $V=I$ and $W=10^{4}I$.
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
 
 Because the primary goal is tracking the desired rotation profile, we want to minimize the steady state error between the output (measured) and the target profile. One way to handle such issue is to use integral action, introducing a new state variable~$z$ that is the integral of the error:
 \begin{equation}
-	\dot{z} = y - y_{d} = C x - y_{d}.
+	\dot{z} = y_{d} - y = y_{d} - C x.
 	\label{integral}
 \end{equation}
 The overall system can be then written as
 \begin{multline}
 \frac{\partial}{\partial t}   \left[\! \begin{array}{c}  x \\ z \end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & 0 \\ C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ z    \end{array}  \!\right] \\
-  + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u -  \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) y_{d}
+  ={ \left(\! \begin{array}{cc} A  & 0 \\ -C & 0 \end{array} \! \right)} \left[\! \begin{array}{c} x \\ z    \end{array}  \!\right] \\
+  + \left(\! \begin{array}{c} B   \\ 0    \end{array}  \!\right) u + \left(\! \begin{array}{c}  0 \\ I \end{array}\!\right) y_{d}
 \label{int2}
 \end{multline}
 with a new feedback law designed as
-\begin{equation}
-u =   - \left(\! \begin{array}{cc}  K & K_I\end{array}\!\right) \left[\! \begin{array}{c}  x \\ z \end{array}\!\right] + F y_{d}
-\end{equation}
+\begin{align}
+u &= \left(\! \begin{array}{cc}  -K & K_I\end{array}\!\right) \left[\! \begin{array}{c}  x \\ z \end{array}\!\right] + F y_{d} \\
+   &= u_d + K (x_d - x) + K_I \!\!\int (y_d - y)
+\end{align}
 where the gains $K$ and $K_I$ can be determined through the MATLAB command LQI.
 A drawback of integral control is that if the actuator values are limited to some range $u\in[u_\text{min},u_\text{max}]$ (as they are in our case), then the integrator can accumulate error when the actuator is ``saturated,'' resulting in poor transient performance, a phenomenon known as ``integrator windup.''  We avoid these effects by using a standard anti-windup scheme (see, e.g., \cite{AandM, Lewis}), in which one feeds back the difference between the desired value of~$u$ and its actual (possibly saturated) value, as shown in the diagram in Figure~\ref{fig:model1}.  
 
@@ -714,12 +714,12 @@ Figure~\ref{fig:model1} shows the schematic of the overall controller, combining
 		\draw[connector] (P) to (P out) to (y);
 		\draw[connector] (P out) -- ++(down:3.5) -| (y input) to (y in) to (y in -| L.west);
 		\draw[connector] (L) to node [above] {$\hat x$} node [below, very near end] {$-$} (sum feedback);
-		\draw[connector] (r in) |- node [above, very near end] {$-$} (sum lqi);
-		\draw[connector] (y in) to (sum lqi);
+		\draw[connector] (r in) |- (sum lqi);
+		\draw[connector] (y in) to node [right, pos=0.95] {$-$} (sum lqi);
 		\draw[connector] (sum lqi) to (Ki);
 		\draw[connector] (Ki) to (AW out);
 		\draw[connector] (AW out) to (integrator);
-		\draw[connector] (integrator) -| node [right, pos=0.95] {$-$} (sum inputs);
+		\draw[connector] (integrator) -| (sum inputs);
 		\draw[connector] (before sat) |- node [below, very near end] {$-$} (sum AW);
 		\draw[connector] (after sat) |- (sum AW);
 		\draw[connector] (sum AW) to (AW);
