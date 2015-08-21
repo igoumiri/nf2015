@@ -171,12 +171,9 @@ The left-hand side of the equation above represents the temporal change in the p
 It is assumed that the plasma cross-sectional shape is well controlled by a
 separate control loop; therefore $\left< R^2 \right>$, $\left< R^2
   (\nabla\rho)^2 \right>$, and $\partial V/\partial \rho$ are held fixed.
-Curve-fits from time-averaged values of these functions (4th- or 5th-order
-polynomials or cubic spline interpolation depending on which one gives the smoothest fit) from TRANSP analysis of an experimental
+Curve-fits from time-averaged values of these functions (4th (Figures~\ref{fig:geofunc}(\emph{a}) and (\emph{c})), 5th (Figures~\ref{fig:geofunc}(\emph{b}) and (\emph{d})) order
+polynomials or cubic spline (Figure~{\ref{fig:chiphi}}) interpolation depending on which one gives the smoothest fit) from TRANSP analysis of an experimental
 plasma are used as approximations.
-%
-\remark{Still need to be specific here: for the data shown in the figures,
-  what sort of curve fits were used?}
 %
 Representative data for a plasma discharge (133367) is shown in
 Figures~\ref{fig:geofunc}(\emph{a}), \ref{fig:geofunc}(\emph{b}) and
@@ -306,9 +303,7 @@ F_\text{NBI}(\rho) = a_\text{NBI} \exp\left( - \frac{\rho^2}{2\sigma^2_\text{NBI
   %
   (b) Spatial average of the torque generated for the same plasma discharge
   ($ \overline{T}_\text{NBI}$), showing the TRANSP analysis
-  (red) and the model~\eqref{eq:nbi_time} (black),
-  %
-  \remark{Is this caption backwards?  Looks like red is the model.}
+  (black) and the model~\eqref{eq:nbi_time} (red),
   %
   with
   $\tau_\text{NBI} = 0.01\,\text{s}$ and  $\kappa_\text{NBI} =
@@ -526,13 +521,7 @@ In this case, a state-space realization is derived and linear quadratic regulato
 
 \subsection{State space realization}
 \label{SS}
-In order to be able to use linear control tools, a linearized state-space realization of the original simplified nonlinear system has to be built.
-Recall that the original simplified system is given by equation~(\ref{model0}).
-%
-\remark{I'm confused: the model~\eqref{model0} is already linear in $\omega$
-  and the torques, as you've already pointed out, so why do you need to
-  linearize? Is it just~\eqref{eqn:ntv} that needs to be linearized?}
-%
+In order to be able to use linear control tools, a state-space realization of equation~(\ref{model0})  shifted around a steady state has to be built.
 Let $\bar{\omega}$ be the steady state reached for the given beam power $ \bar{P}$ and coil current $\bar{I}$. The linearization around this steady state profile can be written as
 \begin{align}
 \omega (t, \rho) &= \bar{\omega} (\rho) + \omega^{'}(t, \rho), \\
@@ -540,7 +529,7 @@ I (t) &= \bar{I} + I^{'}(t),\\
 P_\text{NBI} (t) &= \bar{P} + P^{'}(t),
 \end{align}
 where $ \omega^{'}$ , $ I^{'}$ and $P^{'}$ are the respective perturbations to the equilibria $\bar{\omega}$, $\bar{I}$ and $\bar{P}$.
-By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}) and (\ref{eqn:ntv}) and simplifying, we obtain
+By plugging in these equations into equations~(\ref{model0}) and (\ref{eq:nbi_time}) and by linearizing equation~(\ref{eqn:ntv}) and simplifying, we obtain
 \begin{multline}
 	\frac{\partial}{\partial t}   \left[\! \begin{array}{c}  \omega^{'} \\ \overline{T}_\text{NBI} \end{array}\!\right]
 		={ \left(\! \begin{array}{cc} a_{11}  & a_{12} \\ 0 & a_{22} \end{array} \! \right)} \left[\! \begin{array}{c} \omega^{'} \\ \overline{T}_\text{NBI}    \end{array}  \!\right] \\
@@ -559,46 +548,29 @@ By plugging in these equations into equations~(\ref{model0}), (\ref{eq:nbi_time}
  b_{11} = - \frac{1}{n m \left<R^2\right>} K G(\rho) \langle R^2 \rangle  \omega_0 \nonumber \\
  b_{22} = \kappa_\text{NBI} \nonumber
  \end{eqnarray}
- The above system of equations are spatially discretized at a set of $n-2$
- discrete points between $\rho \in (0,1)$ to generate a state-space realization.
-%
- \remark{I thought you used the Bessel function coefficients for states.  Do you
-   really use a different discretization here?  If so, why?  We just went to
-   some trouble to show that the Bessel function model with 4 states has good
-   qualitative behavior.  If you use a different discretization here, then we
-   need to start all over and validate this too.}
-%
-The boundary points $\rho_1 = 0$ and $\rho_n =1$ are excluded since the boundary conditions are prescribed. With this spatial discretization, the system can be represented in the standard state-space form:
+% 
+This system of equations can be represented in the standard state-space form:
 \begin{align}
 	\dot{x} &= A x + B u, \label{eqn:state-space1} \\
 	y &= C x, \label{eqn:state-space2} 
 \end{align}
-where $x = [  \omega^{'}(\rho_2),\ldots,\,\omega^{'}(\rho_{n-1}), \overline{T}_\text{NBI}(t)     ] \in \mathbb{R}^{n-1}$ is the perturbed state $  \left[ \omega^{'} , \ \ \overline{T}_\text{NBI}(t)  \right]$, $u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
+by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega$ on the $r$ chosen Bessel functions, the perturbed state $x$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $ \left[ a_{0}, a_{1}, ..., a_{r}  \ \ \overline{T}_\text{NBI}(t) \right]$.
+%
+%
+$u \in \mathbb{R}^p$ is the perturbed input $\left( I^{'2}, \ \  P^{'} \right)$ and $y \in \mathbb{R}^q$ is the perturbed output (sensor measurements from their equilibrium values).
+$A \in \mathbb{R}^{\, (r+1) \times (r+1)}$, $B \in \mathbb{R}^{\,(r+1) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+1)}$ are respectively called the dynamics, control and sensor matrices.
 Here, there are two actuators ($p=2$), one power input for the neutral beams and another one for the coil current producing the NTV.
 The outputs $y$ correspond to the sensor measurements of the plasma toroidal rotation. Here, two measurements are taken, one near the core and one towards the edge of the plasma ($q=2$).
-
-The matrices $A \in \mathbb{R}^{\, (n-1) \times (n-1)}$, $B \in \mathbb{R}^{\,(n-1) \times p}$, and $C \in \mathbb{R}^{\, q \times (n-1)}$ are respectively called the dynamics, control and sensor matrices.
-Because the two measurements are pointwise, the matrix $C$ is composed of zeros with a single one on each line.
-
-The state space realization can go one step further by using the spectral decomposition described above (Bessel functions) and projecting the partial state $ \omega$ on the $r$ chosen Bessel functions, the state $ \omega$ will then reduce to the $(r+1)$ Bessel coefficients of the projection $(a_{0}, a_{1}, ..., a_{r})$, the state-space realization will have the reduced dimensions of $A \in \mathbb{R}^{\, (r+2) \times (r+2)}$, $B \in \mathbb{R}^{\,(r+2) \times p}$, and $C \in \mathbb{R}^{\, q \times (r+2)}$.
 %
-\remark{Don't say what you could potentially do: say what you actually do.  If
-  you use the Bessel functions, just say that, and no need to describe other
-  possible discretizations you could have used.}
-
 \subsection{Non-zero target state}
 Once the state-space realization is obtained, the goal is to force the shape of the plasma rotation profile to reach a target state $x_d$ such that the sensor output $y$ matches a reference signal~$y_d$. In the final implementation, all one should have to prescribe is $y_d$ (e.g., plasma rotational frequency values at certain locations). The target state $x_d$ and the corresponding input $u_d$ are found by solving equations~(\ref{eqn:state-space1}) and (\ref{eqn:state-space2}) at steady state
 \begin{equation}
 \left[\! \begin{array}{c}  x_{d} \\ u_{d}\end{array}\!\right]
-  ={ \left(\! \begin{array}{cc} A  & B \\ C & 0 \end{array} \! \right)}^{-1} \left[\! \begin{array}{c} 0 \\ I    \end{array}  \!\right] r_{d} = \left[\! \begin{array}{c} F_x \\ F_u    \end{array}  \!\right] y_{d},
+  ={ \left(\! \begin{array}{cc} A  & B \\ C & 0 \end{array} \! \right)}^{-1} \left[\! \begin{array}{c} 0 \\ I    \end{array}  \!\right] y_{d} = \left[\! \begin{array}{c} F_x \\ F_u    \end{array}  \!\right] y_{d}.
 \label{steadystate}
 \end{equation}
-and $\left( \bar{x}, \bar{u}  \right)$ is the equilibrium point around which the system is linearized, $\bar{y}$ the corresponding measurement values of $\bar{x} = \left( \bar{a}_{0},\, \bar{a}_{1},\ldots,\, \bar{a}_{r},\,\bar{T} \right)$. 
+%and $\left( \bar{x}, \bar{u}  \right)$ is the equilibrium point around which the system is linearized, $\bar{y}$ the corresponding measurement values of $\bar{x} = \left( \bar{a}_{0},\, \bar{a}_{1},\ldots,\, \bar{a}_{r},\,\bar{T} \right)$. 
 %
-\remark{Where are these values like $\bar x$ used?  I don't see them in this formula, so better to describe them where they are used (or if they are not used, of course leave them out).}
-\remark{Since you use $u_d$ and $x_d$ for the desired values of $u$ and~$x$, I
-  think it is more consistent to use $y_d$ instead of $r_d$ for the desired
-  value of~$y$.}
  
 \subsection{Control design} 
 Once the target states $\left( x_{d} , u_{d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
@@ -638,6 +610,7 @@ where $P$ is a positive-definite, symmetric matrix that solves the algebraic Ric
 It should be noted that the feedforward gain~$F$  depends on the matrices $A$, $B$, $C$ and $K$.
 
 Figure~\ref{fig:rot11} defines our initial profile, the equilibrium profile used for the linearization and the targeted profile where the measurements are done.
+In this paper we use $q=10^{4}$ and $R=I$ by inspection of the magnitude of our inputs and outputs.
 \begin{figure}
 	\centering
 \includegraphics{imene_figs/fig11} % Goum133l
@@ -651,9 +624,6 @@ Figure~\ref{fig:rot11} defines our initial profile, the equilibrium profile used
 \subsubsection{Observer-based feedback control design} 
 
 The feedback law~\eqref{eqn:ctrllaw_ff} we designed in the previous section requires knowledge of the full state~$x$.  However, in an actual experiment, we cannot measure the state directly; we measure only the outputs~$y$.  However, we may reconstruct an estimate of the state from the available sensor measurements using an {\em observer}.
-Using our linear model, we design an optimal observer (Kalman filter), which minimizes the expected variance of the error in the state estimate, if the external disturbances and sensor noise are zero-mean Gaussian white noise.
-For more details on observer design, see standard texts such as~\cite{SandP, AandM}. 
-
 A standard linear observer reconstructs a state estimate~$\hat x$, with dynamics given by
 \begin{equation}
 	\begin{split}
@@ -662,16 +632,21 @@ A standard linear observer reconstructs a state estimate~$\hat x$, with dynamics
 		\label{obs}
 	\end{split}
 \end{equation}
-where the matrices $A,B,C$ are the same as those in the model~\eqref{eq:4}, and $L$ is a matrix of gains chosen by the control designer.
-%
-\remark{Since you give the explicit solution for the LQR problem, I think you should include the solution for $L$ here too (the expression for $L$ as well as the ARE for the observer).  You should also say what you used for the parameters (e.g., covariance of sensor and process noise) for the observer design, and how you chose them.  Should give the weights $q$ and~$R$ in LQR too, either here or in the results section, and describe how they were chosen.}
-%
-The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
-By plugging in equation~(\ref{eqn:ctrllaw_ff}) into equation~(\ref{obs}), we obtain after simplification
+where the matrices $A,B$ and~$C$ are the same as those in the model~\eqref{eq:4}, and $L$ is a matrix of gains chosen such that the state estimate converges quickly relative to the system's dynamics.
+Using our linear model, we design an optimal observer (Kalman filter) to find~$L$.
+We introduce two zero-mean Gaussian white noise processes, $v$ the process disturbance and $w$ the sensor noise, with respective covariance matrices $V$ and~$W$, into equations \eqref{eqn:state-space1} and~\eqref{eqn:state-space2} to obtain
+\begin{align}
+	\dot{x} &= A x + B u + v, \label{eqn:state-space-noise1} \\
+	y &= C x + w. \label{eqn:state-space-noise2} 
+\end{align}
+Then the expected variance of the error in the state estimate is obtained by setting
 \begin{equation}
-      \dot{\hat{x}} =  (A- B K  -L C) \hat{x} + B F r_{d} + L y.
+	L = P C^T W^{-1},
 \end{equation}
-\remark{I don't see the need to give this last equation.}
+where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T W^{-1} C P + V = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
+In this paper we use $V=10^{4}I$ and $W=10^{4}I$, corresponding to noise levels of approximately 1\% of the magnitude of our states and outputs.
+
+The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
 
@@ -694,15 +669,15 @@ u =   - \left(\! \begin{array}{cc}  K & K_I\end{array}\!\right) \left[\! \begin{
 where the gains $K$ and $K_I$ can be determined through the MATLAB command LQI.
 A drawback of integral control is that if the actuator values are limited to some range $u\in[u_\text{min},u_\text{max}]$ (as they are in our case), then the integrator can accumulate error when the actuator is ``saturated,'' resulting in poor transient performance, a phenomenon known as ``integrator windup.''  We avoid these effects by using a standard anti-windup scheme (see, e.g., \cite{AandM, Lewis}), in which one feeds back the difference between the desired value of~$u$ and its actual (possibly saturated) value, as shown in the diagram in Figure~\ref{fig:model1}.  
 
-Figure~\ref{fig:model1} shows the schematic of the overall controller, combining the feedback law~\eqref{eqn:ctrllaw_ff} with the observer~\eqref{obs}, the integrator~\eqref{integral} and the anti-windup approach described above. Because the actual state is the perturbed state, the steady state equilibrium input defined in Section~\ref{SS} by $\bar{u} = \left( \bar{I}^{2}, \   \bar{P} \right)$ has to be added to the actual input $u$ before entering the plant.
-\remark{I would leave out this last sentence: true, $x$ is the perturbed state, but $u$ is also the perturbed input.  I think it is clear that everything here is for the linearization about the equilibrium, and sentences such as ``the actual state is the perturbed state'' are just confusing.}
+Figure~\ref{fig:model1} shows the schematic of the overall controller, combining the feedback law~\eqref{eqn:ctrllaw_ff} with the observer~\eqref{obs}, the integrator~\eqref{integral} and the anti-windup approach described above. 
+%Because the actual state is the perturbed state, the steady state equilibrium input defined in Section~\ref{SS} by $\bar{u} = \left( \bar{I}^{2}, \   \bar{P} \right)$ has to be added to the actual input $u$ before entering the plant.
 
 \begin{figure*}
 \begin{tikzpicture}[x=0.75cm]
 		\node (r) {$y_{d}$};
 		\node[junction, right=1.5 of r] (r in) {};
 		\node[block, right=2 of r in] (F) {$F$};
-		\node[block, below=of F] (L) {L};
+		\node[block, below=of F] (L) {Observer};
 		\node[sum, right=of L] (sum feedback) {};
 		\node[block, right=0.9 of sum feedback] (K) {$K$};
 		\node[sum, right=5 of F, yshift=3] (sum inputs) {};
@@ -744,7 +719,7 @@ Figure~\ref{fig:model1} shows the schematic of the overall controller, combining
 		\draw[connector] (Ki) to (AW out);
 		\draw[connector] (AW out) to (integrator);
 		\draw[connector] (integrator) -| node [right, pos=0.95] {$-$} (sum inputs);
-		\draw[connector] (before sat) |- (sum AW);
+		\draw[connector] (before sat) |- node [below, very near end] {$-$} (sum AW);
 		\draw[connector] (after sat) |- (sum AW);
 		\draw[connector] (sum AW) to (AW);
 		\draw[connector] (AW) to ++(up:0.6) -| (AW out);
@@ -753,8 +728,7 @@ Figure~\ref{fig:model1} shows the schematic of the overall controller, combining
 		\node[green!50!black, anchor=south, font=\large\bfseries] at (8.4,3.1) {Controller};
 	\end{tikzpicture}
 
-\caption{Global schematic of the controller that combine a feedforward $(F)$, a LQR $(K)$, an observer $(L)$, an integrator $(K_I)$ and an anti-windup $(AW)$.
-\remark{Need a minus sign in one of signals going into the sum before the antiwindup block.  Also, in this diagram, $L$ is not literally the matrix $L$: that is, $\hat x$ is not $L$ times $(y,u)$.  Better to label the observer block differently (e.g., just with ``Observer'').  Please also check to make sure the other parts of the diagram are correct and consistent with your equations/code.}}
+\caption{Global schematic of the controller that combine a feedforward $(F)$, a LQR $(K)$, an observer, an integrator $(K_I)$ and an anti-windup $(AW)$.}
 \label{fig:model1}
 \end{figure*}
 
@@ -795,8 +769,7 @@ The discretized controller is first applied to the reduced-order model, consider
 \end{figure}
 
 
-Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile, the desired profile, and the profile estimated by the observer.  Four different times are shown: $0.5$\,s (at which time the controller is turned on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. The two sensors locations are indicated in the figure, and it can be noticed that the first targeted profile defined in Figure~\ref{fig:rot11} is reached in less than $0.1$\,s.
-\remark{I don't know what you mean by ``the first targeted profile.''  Do you mean that the observer estimate converges to the actual profile in this time?}
+Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile, the desired profile, and the profile estimated by the observer.  Four different times are shown: $0.5$\,s (at which time the controller is turned on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. The two sensors locations are indicated in the figure, and it can be noticed that the targeted profile is reached in less than $0.1$\,s.
 \begin{figure}
 \centering
 \includegraphics{imene_figs/fig14} % Goum20n 
@@ -804,10 +777,7 @@ Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile,
 \label{fig:rot20}
 \end{figure}    
 
-Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement at the two sensor points located at the core and towards the edge of the plasma.  
-\remark{Say something about what you want the reader to take away from the figure.  Why are you including this figure?  What does it say?  For instance, something like, ``The outputs track the desired values well after about 50\,ms.''}
-
-
+Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement focused at the two sensor points located at the core and towards the edge of the plasma only. The outputs track the desired values well after about $50\,ms$. 
 \begin{figure}
 	\centering
 	\includegraphics{imene_figs/fig15a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
@@ -816,7 +786,7 @@ Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement at t
 	\label{fig:rot19}
 \end{figure} 
 
-Figure~\ref{fig:rot19} represents the requested inputs (coil current and overall beam power) needed to reach the desired profile of Figure~\ref{fig:rot18}. It can be noticed that the current does not saturate whereas the beam power does.
+Figure~\ref{fig:rot19} represents the requested inputs (coil current and overall beam power) needed to reach the desired profile of Figures~\ref{fig:rot18} and \ref{fig:rot20}. It can be noticed that the current does not saturate whereas the beam power does.
 
 Because the initial profile (Figure~\ref{fig:rot18}(a)) before turning the controller on, is above the targeted profile  (Figure~\ref{fig:rot18}(d)), and the difference between the two profiles is higher towards the core of the plasma (where the beam power acts), the controller tries to first push the power down starting from $6$\,MW at the initial state before controlling, up to $2$\,MW when it hits saturation. The green dashed line in Figure~\ref{fig:rot19} shows how the controller would apply the beam power if no saturation was in effect. During the rapid decrease of the beams power, the controller increases the coil current in order to increase the drag and forces rapid deceleration towards the edge of the plasma.  
 The controller and the actuators, when they can be activated instantaneously, enable the rotation profile to reach its target about 2 times faster (about 60\,ms) than the momentum diffusion time (about 100\,ms).
