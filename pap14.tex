@@ -645,7 +645,7 @@ Then the expected variance of the error in the state estimate is obtained by set
 	L = P C^T W^{-1},
 \end{equation}
 where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T W^{-1} C P + V = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
-In this paper, we use $V=I$ and $W=10^{4}I$.
+In this paper, we use $V=10^{4}I$ and $W= I$.
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
