@@ -635,17 +635,17 @@ A standard linear observer reconstructs a state estimate~$\hat x$, with dynamics
 \end{equation}
 where the matrices $A,B$ and~$C$ are the same as those in the model~\eqref{eq:4}, and $L$ is a matrix of gains chosen such that the state estimate converges quickly relative to the system's dynamics.
 Using our linear model, we design an optimal observer (Kalman filter) to find~$L$.
-We introduce two zero-mean Gaussian white noise processes, $v$ the process disturbance and $w$ the sensor noise, with respective covariance matrices $V$ and~$W$, into equations \eqref{eqn:state-space1} and~\eqref{eqn:state-space2} to obtain
+We introduce two zero-mean Gaussian white noise processes, $w$ the process disturbance and $v$ the sensor noise, with respective covariance matrices $W$ and~$V$, into equations \eqref{eqn:state-space1} and~\eqref{eqn:state-space2} to obtain
 \begin{align}
-	\dot{x} &= A x + B u + v, \label{eqn:state-space-noise1} \\
-	y &= C x + w. \label{eqn:state-space-noise2} 
+	\dot{x} &= A x + B u + w, \label{eqn:state-space-noise1} \\
+	y &= C x + v. \label{eqn:state-space-noise2}
 \end{align}
 Then the expected variance of the error in the state estimate is obtained by setting
 \begin{equation}
-	L = P C^T W^{-1},
+	L = P C^T V^{-1},
 \end{equation}
-where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T W^{-1} C P + V = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
-In this paper, we use $V=10^{4}I$ and $W= I$.
+where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T V^{-1} C P + W = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
+In this paper, we use $W=10^{4}I$ and $V= I$.
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
