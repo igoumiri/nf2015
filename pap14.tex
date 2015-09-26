@@ -8,6 +8,9 @@
 % Note to the editor: It is a very unfortunate package incompatibility. Please fix this!
 
 \usepackage{graphicx}
+
+\graphicspath{{figs/}}
+
 \usepackage{xcolor}
 \usepackage{amssymb}
 \usepackage{tikz}
@@ -183,10 +186,10 @@ or even the fixed values at an adequately chosen time ($t = 0.65 s$) is
 considered to be a close approximation.
 %
 \begin{figure} 
-\includegraphics{imene_figs/fig1a} \hspace{-3em}\raisebox{7.7em}{(a)} \\
-\includegraphics{imene_figs/fig1b} \hspace{-3em}\raisebox{7.7em}{(b)} \\
-\includegraphics{imene_figs/fig1c} \hspace{-3em}\raisebox{7.7em}{(c)} \\[-.4em]
-\includegraphics{imene_figs/fig1d} \hspace{-3em}\raisebox{9.7em}{(d)}
+\includegraphics{fig1a} \hspace{-3em}\raisebox{7.7em}{(a)} \\
+\includegraphics{fig1b} \hspace{-3em}\raisebox{7.7em}{(b)} \\
+\includegraphics{fig1c} \hspace{-3em}\raisebox{7.7em}{(c)} \\[-.4em]
+\includegraphics{fig1d} \hspace{-3em}\raisebox{9.7em}{(d)}
 \caption{Functions describing the radial profiles of the geometrical properties: $\left< R^2 \right>$, $\left< R^2 (\nabla\rho)^2 \right>$, $\partial V/\partial \rho$ and  the mass density $ \sum_i n_i m_i $ from a TRANSP analysis of plasma discharge 133367.  The shaded region represents the value of the function spanned over time interval ($0.45$--$0.92$) seconds . The time-average values are shown by the black dashed line (--~--), the fixed time values and its curve-fit are shown by the solid blue lines (---) and the red dots (o) respectively.}
 \label{fig:geofunc}
 \end{figure}
@@ -242,7 +245,7 @@ Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ from a particular run (p
 
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig2} % CHIPHI1n
+\includegraphics{fig2} % CHIPHI1n
 \caption{The momentum diffusivity coefficient $ \chi_{\phi}$ is calculated through TRANSP analysis. The time-average values and their curve-fits are shown by the circles  and the solid lines respectively}
 \label{fig:chiphi}
 \end{figure}
@@ -273,8 +276,8 @@ input, as we describe below.
 
 \begin{figure}
 \begin{tabular}{cc}
-\includegraphics[width=\linewidth]{imene_figs/fig3a} \\
-\includegraphics[width=\linewidth]{imene_figs/fig3b}
+\includegraphics[width=\linewidth]{fig3a} \\
+\includegraphics[width=\linewidth]{fig3b}
 \end{tabular}
 \caption{Illustration of the neutral beam injection (NBI) devices for NSTX-U with an inside view from the top of the tokamak (top) and outside view (bottom).}
 \label{NBI_pics}
@@ -293,8 +296,8 @@ F_\text{NBI}(\rho) = a_\text{NBI} \exp\left( - \frac{\rho^2}{2\sigma^2_\text{NBI
 \end{equation}
 %
 \begin{figure}
-\includegraphics{imene_figs/fig4a} \hspace{-2.7em}\raisebox{12.2em}{(a)} \\[-1em] % Goum7
-\includegraphics{imene_figs/fig4b} \hspace{-2.7em}\raisebox{4.2em}{(b)}          % Goum8
+\includegraphics{fig4a} \hspace{-2.7em}\raisebox{12.2em}{(a)} \\[-1em] % Goum7
+\includegraphics{fig4b} \hspace{-2.7em}\raisebox{4.2em}{(b)}          % Goum8
 \caption{(a) Spatial profile for the neutral beam torque ($F_\text{NBI} $) for
   plasma discharge 133367.  The shaded region represents the values for times
   ranging from 0.45 to 0.92~seconds: time averaged values (--~--); values at the
@@ -336,7 +339,7 @@ the neutral beam torque predicted by TRANSP analysis, which uses a more
 elaborate Monte Carlo model.
 %\begin{figure}
 %\centering
-%\includegraphics{imene_figs/fig5} % Goum9
+%\includegraphics{fig5} % Goum9
 %\caption{Comparison of the time evolution profile between the modeled NBI torque (from equations \ref{eq5}, \ref{eq6} and \ref{eq:nbi_time}) and the measured NBI torque from the TRANSP analysis.}
 %\label{fig:Fullnbi}
 %\end{figure}
@@ -350,7 +353,7 @@ Tokamaks usually have error fields or magnetohydrodynamic (MHD) activities prese
 
 \begin{figure}
 	\centering
-   \includegraphics{imene_figs/fig5}
+   \includegraphics{fig5}
 \caption{Model representation of the three-dimensional coils (highlighted in
   blue) used to create the magnetic field that produces NTV in the NSTX device.}
   \label{pic_NTV}
@@ -363,7 +366,7 @@ For the current one-dimensional toroidal momentum model, we aim to model the mom
 where $K$ is a constant and $G$ is a Gaussian function.
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig6} \adjustbox{raise=10.2em, lap=-16em}{} % current
+	\includegraphics{fig6} \adjustbox{raise=10.2em, lap=-16em}{} % current
 	\caption{ Coil current $I(t)$ for plasma discharges 133367:
           the green line represents the model from CHERS data and  blue lines represent the smoothed data.}
 	\label{fig:current}
@@ -381,7 +384,7 @@ G_\text{NTV}  (\rho) = K \,  \langle R^2 \rangle \:G(\rho),
 %
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig7} % Goum10
+\includegraphics{fig7} % Goum10
 \caption{3D representation of the NTV torque model~\eqref{eqn:ntv} where
   $\omega$ is taken from experimental measurements of ``fixed'' plasma discharge
   133367, and $I^2$ is as shown in Figure~\ref{fig:current}.}
@@ -436,7 +439,7 @@ Given two points of measurements of rotation (outputs), one near the core, the o
 
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig8} % Goum12
+\includegraphics{fig8} % Goum12
 \caption{Two rotation measurements with NBI and NTV actuators activated at $t=0$\,s and $t=0.5$\,s respectively, comparing TRANSP analysis with fixed background (black), with the model~\eqref{model0}, with $N=4$ Bessel functions (red).}
 \label{Goum12}
 \end{figure}
@@ -455,7 +458,7 @@ This simplified model (derived plasma discharge 133367) has been extensively val
 The overall behavior of the plasma is captured qualitatively very well using the simplified model of equation~\eqref{model0} with a fixed background. 
 
 \begin{figure}
-\includegraphics{imene_figs/fig9}
+\includegraphics{fig9}
 \caption{Comparison of the rotational frequency $\omega$ for plasma discharge 133743, comparing TRANSP analysis (left), with the simplified model~\eqref{model0}, projected onto $N=40$ Bessel modes, and $N=4$ Bessel modes.  Also shown is the relative error between TRANSP and the reduced model ($N=4$).}
 \label{fig10}
 \end{figure}
@@ -506,7 +509,7 @@ The overall behavior of the plasma is captured qualitatively very well using the
 %This Bessel decomposition is now applied on the simplified model defined by equation~(\ref{model0}). Figure~\ref{bessel1} compares the three model simulations, one is taken from TRANSP analysis of the experimental measurement of the toroidal rotation (with varying background), the two other models are simulated in real space dimension and spectrally by projecting the original model on only 4 Bessel modes respectively in a fixed background. It can be noticed that only 4 Bessel modes are sufficient for capturing most features of the dynamics.
 %
 %\begin{figure}
-%\includegraphics[width=\linewidth]{imene_figs/fig10} % bessel11n 
+%\includegraphics[width=\linewidth]{fig10} % bessel11n
 %\caption{comparison of spectral simulation of the toroidal rotation using 4 Bessel modes (right) with the full nonlinear simplified model using 60 points of discretization for plasma discharge 133367 (middle) in fixed background and the rotation from TRANSP analysis (left) in variable background.
 %\remark{Not sure we need this figure.  What does this show that is not already in Figure 9?  I thought the point is that this model was calibrated on shot 133743 and run for shot 133367, then should make that point explicitly.}}
 %\label{bessel1}
@@ -614,7 +617,7 @@ Figure~\ref{fig:rot11} defines our initial profile, the equilibrium profile used
 In this paper we use $q=10^{4}$ and $R=I$ by inspection of the magnitude of our inputs and outputs.
 \begin{figure}
 	\centering
-\includegraphics{imene_figs/fig11} % Goum133l
+\includegraphics{fig10} % Goum133l
 \caption{Rotation profiles: definition of the initial profile, equilibrium profile $w_0$ used for the linearization and the desired profiles to reach $w_d$. The two points of measurement $r$ are shown by the two dots.}
 \label{fig:rot11}
 \end{figure}
@@ -645,7 +648,7 @@ Then the expected variance of the error in the state estimate is obtained by set
 	L = P C^T V^{-1},
 \end{equation}
 where $P$ is a positive-definite, symmetric matrix that solves the algebraic Riccati equation: $A {P} + P {A}^T - P {C}^T V^{-1} C P + W = 0$.  This equation is solved numerically using standard routines in MATLAB. For more details about the method, see standard references such as~\cite{SandP, AandM}.
-In this paper, we use $W=10^{4}I$ and $V= I$.
+In this paper, we use $W= \operatorname{diag}(10^{4}I_r, 0)$ and $V= I$.
 The observer generates an estimate of the state from the physics model as represented by the state matrix, the inputs and outputs, and once combined to the feedback controller it forms a linear quadratic Gaussian compensator.
 
 \subsubsection{Integrator, actuators saturation and anti-windup design} 
@@ -761,10 +764,10 @@ The discretized controller is first applied to the reduced-order model, consider
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig13a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em] % Goum18ln
-	\includegraphics{imene_figs/fig13b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em] % Goum18lln
-	\includegraphics{imene_figs/fig13c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em] % Goum18llln
-	\includegraphics{imene_figs/fig13d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)} % Goum18lllln
+	\includegraphics{fig12a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em] % Goum18ln
+	\includegraphics{fig12b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em] % Goum18lln
+	\includegraphics{fig12c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em] % Goum18llln
+	\includegraphics{fig12d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)} % Goum18lllln
 	\caption{Time evolution of the rotation in the model as it evolves toward the target values and its estimate at 4 different times. The green profile is the targeted rotation profile. }
 	\label{fig:rot18}
 \end{figure}
@@ -773,7 +776,7 @@ The discretized controller is first applied to the reduced-order model, consider
 Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile, the desired profile, and the profile estimated by the observer.  Four different times are shown: $0.5$\,s (at which time the controller is turned on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. The two sensors locations are indicated in the figure, and it can be noticed that the targeted profile is reached in less than $0.1$\,s.
 \begin{figure}
 \centering
-\includegraphics{imene_figs/fig14} % Goum20n 
+\includegraphics{fig13} % Goum20n
 \caption{Time evolution of the rotation measurement at the two sensor points. The dashed lines represents the desired measurements at these latter locations. }
 \label{fig:rot20}
 \end{figure}    
@@ -781,8 +784,8 @@ Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile,
 Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement focused at the two sensor points located at the core and towards the edge of the plasma only. The outputs track the desired values well after about $50\,ms$. 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig15a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
-	\includegraphics{imene_figs/fig15b} \adjustbox{raise=3.2em,lap=-2.8em}{(b)}
+	\includegraphics{fig14a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
+	\includegraphics{fig14b} \adjustbox{raise=4.8em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power and its saturation, needed to reach the 1st desired profile }
 	\label{fig:rot19}
 \end{figure} 
@@ -806,15 +809,15 @@ Durations greater and smaller than 10\,ms are chosen to compare output results f
   
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig16} % Goum14ln
+	\includegraphics{fig15} % Goum14ln
 	\caption{Comparison of the rotation measurements when PWM is applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.015 s$).}
 	\label{fig:rot14}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig17a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum15ln
-	\includegraphics{imene_figs/fig17b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
+	\includegraphics{fig16a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum15ln
+	\includegraphics{fig16b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power (cycle time $0.015  s$).}
 	\label{fig:rot15}
 \end{figure}
@@ -832,15 +835,15 @@ The reduced-order model in both cases is very close to the TRANSP which again sh
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig18} % Goum16ln
+	\includegraphics{fig17} % Goum16ln
 	\caption{Comparison of the rotation measurements when PWM applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.006 s$).}
 	\label{fig:rot16}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{imene_figs/fig19a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
-	\includegraphics{imene_figs/fig19b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
+	\includegraphics{fig18a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
+	\includegraphics{fig18b} \adjustbox{raise=3.6em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beams power (cycle time $0.006 s$). }
 	\label{fig:rot17}
 \end{figure}
