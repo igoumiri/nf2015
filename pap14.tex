@@ -227,7 +227,7 @@ arising from neutral beam injection (NBI) and neoclassical toroidal viscosity
 pinch term and  the momentum loss due to charge exchange are small and the
 momentum loss due to  field ripple is not required, as NTV is explicitly
 determined in this calculation. Details of the models for $T_\text{NBI}$
-and~$T_\text{NTV}$ are shown in sections~\ref{NBIAM} and~\ref{TNTV}.  The
+and~$T_\text{NTV}$ are shown in Sections~\ref{NBIAM} and~\ref{TNTV}.  The
 Dirichlet boundary condition at the plasma edge ($\rho=1$) is chosen to be
 consistent with experimental observations.
   
@@ -393,7 +393,7 @@ G_\text{NTV}  (\rho) = K \,  \langle R^2 \rangle \:G(\rho),
 %
 and $G(\rho)$ is a Gaussian function centered towards the edge ($\mu =0.7, \sigma =0.1$).
 %
-Figure~{\ref{fig:current}}(\emph{a}) shows the current that flows into the coils
+Figure~{\ref{fig:current}} shows the current that flows into the coils
 for the plasma discharge 133367. We notice that the current is kept constant
 after $0.6$s. It should be noted that for control design, the actuator input
 will be~$I^2(t)$.
@@ -428,8 +428,8 @@ Note that~\eqref{model0} is linear in~$\omega$, and can be written as
 \end{equation}
 where $L$ is a differential operator linear in each argument.  Inserting the expansion~\eqref{decomp} into~\eqref{eq:3}, taking inner products with~$\varphi_m$, and using the orthogonality relation~\eqref{eq:2} then gives
 \begin{equation*}
-  \dot a_m = \sum_{n=1}^N \frac{\langle L(\varphi_n, T_\text{NBI}, T_\text{NTV}),
-    \varphi_m\rangle}{\langle \varphi_m,\varphi_m\rangle},\qquad m=1,\ldots,N,
+  \dot a_m = \sum_{n=1}^N \frac{\langle L(\varphi_n, T_\text{NBI}, T_\text{NTV}(\varphi_n)),
+    \varphi_m\rangle}{\langle \varphi_m,\varphi_m\rangle},\quad m=1,\ldots,N,
 \end{equation*}
 which is a set of $N$ coupled ordinary differential equations for the coefficients $a_m$.
 
@@ -852,7 +852,8 @@ The reduced-order model in both cases is very close to the TRANSP which again sh
 \section{Summary and conclusions}
 \label{sec:conclusions}
 
-In the above plasma control demonstrations, a simple reduced-order model has been built to capture the rotational toroidal momentum balance, applied specifically to the NSTX device. The neutral beam injection and the neoclassical toroidal viscosity are considered in this model as actuators. The output from the present model have been compared with analysis from a predictive model of NSTX and were found to be in good agreement.
+A simple reduced-order model has been developed to capture the rotational toroidal momentum balance for the NSTX device.  This model was utilized to control the plasma about its desired profile with the neutral beam injection and the neoclassical toroidal viscosity.
+The output from the model have been compared with analysis from a predictive model of NSTX and were found to be in good agreement.
 Based on this simplified model, a complete feedback control design using optimal control techniques as shown above and enables controlling the plasma about a desired profile. This reduced-order controller was then tested using the NSTX predictive model and enabled the rotation profile to reach the desired profile.
 
 Generally, broader toroidal rotation profile brings more stability to the plasma \cite{Sabbagh10} and local rotation shear can affect MHD modes  \cite{Gerhardt09}. In the new upgrade of the device, NSTX-U, three additional NBI sources (Figure~{\ref{NBI_pics}}) will provide significantly different torque profiles which can affect a broader region of the plasma, specifically towards the edge and can change the shear locally. In this case, the controller can use these added beam sources allowing significantly greater control of plasma instabilities.
