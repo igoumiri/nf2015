@@ -8,20 +8,20 @@
 \newcommand{\response}[1]{\textcolor{red!80!black}{\bf #1}}
 
 \begin{document}
-\response{The authors would like to thank the referees for their helpful comments, it enables us to improve the paper and clarify it better.
-We present our answers to each referee comments in what is following.}
+\response{The authors would like to thank the referees for their helpful comments.
+We present our answers to each referee comments.}
 \section{Answers to referee 1}
 
 1. Page 4, 45-46 lines: The authors state “for this significant class of high confinement discharges, the pinch term is small”. Could you explain how the pinch term can be smaller than the diffusive term? If it is the case in NSTX, it should be specified. Please state the reason because it is not true for the conventional device.
 
 \response{The pinch was found to be small compared to the diffusive term for the shots that we used for modeling and control.
-This statement is supportable by experimental results contained in:  \\
+This statement is by experimental results contained in:  \\
 1- Momentum transport in electron-dominated NSTX spherical torus plasmas
 S.M. Kaye, W. Solomon,  et al. Published 16 March 2009 • 2009 IAEA, Vienna • Nuclear Fusion, Volume 49, Number 4\\
 2- Momentum-transport studies in high EXB shear plasmas in the National Spherical Torus Experiment 
 Solomon WM, Kaye SM, Bell RE, et al. 
 PHYSICAL REVIEW LETTERS 101 065004 (AUG 8 2008)\\
-We modified the paper sentence by specifying that it is proper to the high confinement discharges specific to NSTX:   ``...Note that for this significant class of high confinement discharges specific to NSTX, the pinch term...''.
+We modified the paper by specifying that it is specific to the high confinement discharges specific to NSTX:   ``...Note that for this significant class of high confinement discharges specific to NSTX, the pinch term...''.
 We also added the two references to the paper.}\\
 
 2. Page 6. It would be better to add the discharge number and time to the figure caption.
@@ -29,18 +29,25 @@ We also added the two references to the paper.}\\
 \response{The caption was updated to include shot number and time.} \\
 
 3. Page 7. The authors used a simplified NBI torque profile which is proportional to the injected beam power. It is hard to imagine that the NBI torque and the approximated slowing down time are not sensitive to the plasma conditions. In general, the slowing down time highly depends on the collisionality, and the value used in this study (0.01 s. Is it constant for the feedback control part?) could significantly affect the control performance. \\
-\response{We agree, we wanted to start with a simplified model that does not depend on the collisionality (plasma density and temperature) however we are using NBI torque profiles produced by TRANSP code using the correct neutral beam geometry for H mode plasma operation that are considered important. With that assumption, we can determine how well the controller operate as illustrated in the paper.
-The value of the slowing down time (0.01s) is indeed constant for the feedback control part.}\\
+\response{We wanted to start with a simplified model that does not depend on the collisionality (plasma density and temperature)  we are using NBI torque profiles produced by TRANSP code using the correct neutral beam geometry for H mode plasma operation that are considered important. With that assumption, we can determine how well the controller operate as illustrated in the paper.
+The value of the slowing down time (0.01s) is indeed constant for the feedback control part.
+We tested the impact on control of using different values of $\tau_\text{NBI}$ and added the following discussion to section 2.2.1:\\\indent
+``$\tau_\text{NBI}$ depends on the collisionality and can affect the response time of the beam power actuator.
+For values of $\tau_\text{NBI}$ between 10 and 30ms, the impact that the actuator has on the control does not change significantly.
+By fitting equation~(6) with TRANSP analysis of Figure~4(b),
+$\tau_\text{NBI}$ is set to $0.01$s."}\\
 
 4. Page 12. Although the exact plasma model could not be a major concern in feedback control, the plasma model proposed in this paper can significantly affect to the conclusion of the model validation. The momentum diffusivity described in Figure 2 can be varied with the change of the plasma condition (e.g. NBI power is increased from 2MW to 6MW). The authors state “this simplified model (derived plasma discharge 133367) has been extensively validated against other plasma discharges in NSTX analysis”. Therefore, it would be more revealing if you try to show more systematic approach such as comparison to various discharges than simply showing the result of single discharge 133743.\\
 \response{Another comparison of the model against another shot number 133751 has been added to the paper to illustrate the point.}\\
 
 5. Page 18. In this paper, it seems you didn’t consider the observer constraints (such as engineering constraints of the measurement system). Regardless of a consideration of the error in the measured quantities and the change in the measurement location due to the change in the plasma equilibrium, is it possible to measure the rotation profile in real-time?
 
-\response{Yes, it is possible to measure the rotation profile in real time. See the reference below:
+\response{Yes, it is possible to measure the rotation profile in real time.
+A real-time rotation diagnostic exists on the NSTX-U device and is expected to operate in 2016.
+See the
 M. Podest\`a and R. E. Bell, Rev. Sci. Instrum. 83 033503 (2012).
 The paper describes the instrument and shows results from initial tests with Ne glow ``plasmas".\\
-Also some details can be found in the already mentioned paper by Zhu et al. 2006:
+Also some details can be found in the paper by Zhu et al. 2006:
 ``.....Plasma rotation is measured at 51 locations across the outboard major radius at the device midplane by a charge exchange recombination spectroscopy (CHERS) diagnostic using emission from ...."\\
 We added references to theses papers in the introduction:
 ``The present work defines a model-based algorithm for plasma rotation control based on experimental data from NSTX [1], that measures the rotational (toroidal) momentum transport in the tokamak. More details about how to measure rotation profile in real-time can be found in [36, 37]."} \\
@@ -53,9 +60,10 @@ We added references to theses papers in the introduction:
 For target rotation profiles, it looks like these profiles are mainly controlled by NBI and it has a typical rotation profile coming from NBI driven torque. In your paper, one of the main points is based on using 2 actuators. This may allow the various shape of the rotation profile which has a relation to the rotation shear or MHD instability stabilization. So, please show control result using the different target rotation profile such as more peaked profile.
 Regarding the question above, the coil current used for the feedback control looks much smaller than its maximum range. Could you describe the how large is this NTV torque compare to the NBI driven torque and its effect on the overall rotation profile?
 
-\response{The most desirable experimental stable profiles tend to be shaped like the one we used: high in the core and low towards the edge. Such profiles favor the use of NBI actuators because the rotation is naturally low towards the edge.
-If the profiles were more peaked, larger NTV torque would be required but they would act against the NBI driven torque which would make the profiles more difficult to reach.\\
-We showed a more peaked profile that required more NTV in figures 20 and 21, please refer to the paper.}
+\response{NTV torque can be found in Figure~7 and it is located toward the edge of the plasma so it affects mainly the tail of the profile (it has the effect of a drag) and it is of the range of 0.4 N/m$^2$ (depends on the rotation).
+NBI torque profile is located towards the core (it has a boosting effect) and it is of the range of 1 N/m$^2$.
+If the profiles were more peaked, larger NTV torque would be required but they would act against the NBI driven torque which would make the profiles more difficult to reach.
+We showed a more peaked profile that required more NTV in figures 20 and 21.}
 
 
 
@@ -87,18 +95,18 @@ The list may be much longer, and the authors are encouraged to perform a wider l
 
 page4, discussing , it should also be noted that the internal distribution of will change e.g. due to changing Shafranov shift as the beam power is increased.\\
 
-\response{The referee did not complete the sentence but we assume he wants to talk about the internal distribution of the torque, and we agree, but for the purpose of plasma stability, what matters here is plasma rotation profile as function of poloidal flux (directly related to $\rho$), and since we are controlling a rotation profile function of $\rho$, this physical effect will be compensated by the controller.} \\
+\response{The referee did not complete the sentence but we assume he wants to talk about the internal distribution of the torque, and we agree. For the purpose of plasma stability, what matters here is plasma rotation profile as function of poloidal flux (directly related to $\rho$), and since we are controlling a rotation profile function of $\rho$, this physical effect will be compensated by the controller.} \\
 
 Figure 3: the quality of the figure could be increased.
 
-\response{We updated our paper with a more recent better quality pictures}\\
+\response{We updated our paper with a better quality pictures}\\
 
 Figure 4: there appears to be a delay that is not discussed?
 
-\response{The delay is this rise time that appears due to $\tau_{NBI}$.} \\
+\response{We added a discussion about $\tau_{NBI}$ at the end of section 2.2.1.} \\
 
 page 11: perhaps separate the discussion of the discretization and the validation vs TRANSP into different subsections? \\
-\response{Done}\\
+\response{Thank you, we have taken your comments into consideration and modify the section appropriately.}\\
 
 P12 end of section 2: I don't believe that one can state whether 30\% is acceptable or not at this stage, this can only be done after testing for the expected range of application on a high-fidelity simulator (or the real plant). \\
 \response{We changed the reformulation and added another case to illustrate another example}\\
@@ -133,14 +141,15 @@ Conclusion: Same issue as in the introduction regarding ITER and its lack of rot
 \response{Changed ITER to FNSF device.} \\
 
 Another important detail to include is what kind of rotation measurements are expected on NSTX-U and what time/spatial resolution they are expected to have. \\
-\response{It is possible to measure the rotation profile in real time. See the reference below:
+\response{It is possible to measure the rotation profile in real time.
+A real-time rotation diagnostic exists on the NSTX-U device and is expected to operate in 2016.
+See the
 M. Podest\`a and R. E. Bell, Rev. Sci. Instrum. 83 033503 (2012).
 The paper describes the instrument and shows results from initial tests with Ne glow ``plasmas".\\
-Also some details can be found in the already mentioned paper by Zhu et al. 2006:
+Also some details can be found in the paper by Zhu et al. 2006:
 ``.....Plasma rotation is measured at 51 locations across the outboard major radius at the device midplane by a charge exchange recombination spectroscopy (CHERS) diagnostic using emission from ...."\\
 We added references to theses papers in the introduction:
 ``The present work defines a model-based algorithm for plasma rotation control based on experimental data from NSTX [1], that measures the rotational (toroidal) momentum transport in the tokamak. More details about how to measure rotation profile in real-time can be found in [36, 37]."} \\
-
 
 
 

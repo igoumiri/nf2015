@@ -247,7 +247,7 @@ Figure~{\ref{fig:chiphi}} shows the deduced $\chi_\phi$ from a particular run (p
 
 \begin{figure}
 \centering
-\includegraphics{fig2} % CHIPHI1n
+\includegraphics{fig2}
 \caption{The momentum diffusivity coefficient $ \chi_{\phi}$ is calculated through TRANSP analysis of plasma discharge 133775.  The shaded region represents the value of the function spanned over time interval ($0.45$--$0.92$) seconds. The time-average values and its curve-fit are shown by the circles  and the solid line respectively.}
 \label{fig:chiphi}
 \end{figure}
@@ -278,8 +278,8 @@ input, as we describe below.
 
 \begin{figure}
 \begin{tabular}{cc}
-\includegraphics[width=\linewidth]{fig3aa} \\
-\includegraphics[width=\linewidth]{fig3bb}
+\includegraphics[width=\linewidth]{fig3a} \\
+\includegraphics[width=\linewidth]{fig3b}
 \end{tabular}
 \caption{Illustration of the neutral beam injection (NBI) devices for NSTX-U with an inside view from the top of the tokamak (top) and outside view (bottom).}
 \label{NBI_pics}
@@ -298,8 +298,8 @@ F_\text{NBI}(\rho) = a_\text{NBI} \exp\left( - \frac{\rho^2}{2\sigma^2_\text{NBI
 \end{equation}
 %
 \begin{figure}
-\includegraphics{fig4a} \hspace{-2.7em}\raisebox{12.2em}{(a)} \\[-1em] % Goum7
-\includegraphics{fig4b} \hspace{-2.7em}\raisebox{4.2em}{(b)}          % Goum8
+\includegraphics{fig4a} \hspace{-2.7em}\raisebox{12.2em}{(a)} \\[-1em]
+\includegraphics{fig4b} \hspace{-2.7em}\raisebox{4.2em}{(b)}
 \caption{(a) Spatial profile for the neutral beam torque ($F_\text{NBI} $) for
   plasma discharge 133367.  The shaded region represents the values for times
   ranging from 0.45 to 0.92~seconds: time averaged values (--~--); values at the
@@ -335,17 +335,15 @@ where $\tau_\text{NBI}$ is the approximate slowing down time of the fast neutral
 beam particles to impart energy to the bulk plasma and $\kappa_\text{NBI}$ is a
 scalar used to normalize the neutral beam power $P_\text{NBI}$.
 %
+$\tau_\text{NBI}$ depends on the collisionality and can affect the response time of the beam power actuator.
+For values of $\tau_\text{NBI}$ between 10 and 30ms, the impact that the actuator has on the control does not change significantly.
+By fitting equation~\eqref{eq:nbi_time} with TRANSP analysis of Figure~\ref{fig:Fnbi}(b),
+$\tau_\text{NBI}$ is set to $0.01$s.
+
 Figure~\ref{fig:Fnbi}(\emph{b}) shows the solution of
 equation~(\ref{eq:nbi_time}) with $P_\text{NBI}$ fixed to 6\,MW, compared with
 the neutral beam torque predicted by TRANSP analysis, which uses a more
 elaborate Monte Carlo model.
-%\begin{figure}
-%\centering
-%\includegraphics{fig5} % Goum9
-%\caption{Comparison of the time evolution profile between the modeled NBI torque (from equations \ref{eq5}, \ref{eq6} and \ref{eq:nbi_time}) and the measured NBI torque from the TRANSP analysis.}
-%\label{fig:Fullnbi}
-%\end{figure}
-
 
 
 \subsubsection{Neoclassical Toroidal Viscosity (NTV)}
@@ -386,7 +384,7 @@ G_\text{NTV}  (\rho) = K \,  \langle R^2 \rangle \:G(\rho),
 %
 \begin{figure}
 \centering
-\includegraphics{fig7} % Goum10
+\includegraphics{fig7}
 \caption{3D representation of the NTV torque model~\eqref{eqn:ntv} where
   $\omega$ is taken from experimental measurements of ``fixed'' plasma discharge
   133367, and $I^2$ is as shown in Figure~\ref{fig:current}.}
@@ -444,7 +442,7 @@ Given two points of measurements of rotation (outputs), one near the core, the o
 
 \begin{figure}
 \centering
-\includegraphics{fig8} % Goum12
+\includegraphics{fig8}
 \caption{Two rotation measurements with NBI and NTV actuators activated at $t=0$\,s and $t=0.5$\,s respectively, comparing TRANSP analysis with fixed background (black), with the model~\eqref{model0}, with $N=4$ Bessel functions (red).}
 \label{Goum12}
 \end{figure}
@@ -465,68 +463,18 @@ For all the models, the initial condition is set to be the experimental rotation
 An exact plasma model is not a major concern as feedback control can be performed to tolerate errors in the model. The key is to ensure the model does not deviate drastically from the actual profile in order to prevent control system instabilities from dominating plasma physics dynamics.
 
 This simplified model (derived plasma discharge 133367) has been extensively validated against other plasma discharges in NSTX analysis (showing here 133743). The error remains acceptable starting with less than 25\% for the  experimental data 133743 where the original model was maintained the same, only the density and the input torques were updated. Figure~\ref{fig99} shows how the simplified model performs for another different plasma discharge ($133751$). The error does not exceed 30\% for other experimental comparisons. 
-% which is tolerable for plasma rotation control.
 
 The overall behavior of the plasma is captured qualitatively very well using the simplified model of equation~\eqref{model0} with a fixed background. 
 
 
 
 \begin{figure}
-\includegraphics{fig99}
+\includegraphics{fig10}
 \caption{Comparison of the rotational frequency $\omega$ for plasma discharge 133751, comparing TRANSP analysis (left), with the simplified model~\eqref{model0}, projected onto $N=4$ Bessel modes.  Also shown is the relative error between TRANSP and the reduced model ($N=4$).}
 \label{fig99}
 \end{figure}
-%\subsection{Reduced order model using Bessel functions}
-%
-%Among many model reduction techniques, such as singular perturbation or Hankel norm reduction methods, the projection-based method, which involves projection of a model onto a set of modes, is a widely used approach. These may be global eigenmodes of a linearized operator \cite{Akervik07}, modes determined by proper orthogonal decomposition (POD) of a set of data, or variants of POD modes \cite{Holmes12}. 
-%
-%It can be noticed from the mathematical structure of the momentum diffusion equation~(\ref{model0}), that the diffusion part looks like a Laplacian operator in cylindrical coordinates, thus the Bessel functions will be the natural choice for the basis. 
-%
-%Recall that the Bessel modes are constructed as different versions of the same Fourier-Bessel function of the first kind $J_{\alpha}$, where the argument to each version $n$ is differently scaled, according to
-%\begin{equation}
-%(J_{\alpha})_n (x) = J_{\alpha} \left(  \frac{ k_{\alpha,n}}{L} x \right),
-%\label{defmod}
-%\end{equation}
-%where $ k_{\alpha,n}$ is a root, numbered $n$ associated with the Bessel Function $J_{\alpha}$.
-%%
-%\remark{The above is verbatim from the Wikipedia entry for Fourier-Bessel
-%  series.  This is plagiarism, and is a major problem!  This needs to be
-%  rewritten, and if there are other parts that are taken from other sources like
-%  this, those need to be rewritten also.}
-%%
-%$L$ is a length constant assumed to equal unity as the spatial variable varies between 0 (at the core) and 1 (at the edge of the plasma). The variables $a_n$ are the assigned coefficients. The toroidal rotation $\omega$ can thus be written as 
-%\begin{equation}
-%\omega(\rho,t)  = \sum_{n=0}^{\infty} a_n(t) \, J_{\alpha} \left( { k_{\alpha,n}} \rho \right),
-%\label{decomp}
-%\end{equation}
-% with
-% \begin{equation}
-%a_n(t) = \frac{\langle \omega(\rho,t), \left(J_{\alpha} \right)_n \rangle }{\langle  \left(J_{\alpha} \right)_n ,  \left(J_{\alpha} \right)_n   \rangle},
-%\end{equation}
-%and where the scalar product is defined as 
-%\begin{equation}
-%\langle f,g \rangle =   \int^1 _0 \rho \, f(\rho) \, g(\rho) \, d\rho.
-%\end{equation}
-%By matter of respecting the boundary conditions given in equation~(\ref{bc0}), we consider the particular case of $\alpha = 0$, this reduces equation~(\ref{decomp}) to
-%\begin{equation}
-%\omega(\rho,t)  = a_0(t) + \sum_{n=1}^{r} a_n(t) \, J_{0} \left(  k_{0,n} \rho \right),
-%\end{equation}
-%with
-%\begin{equation}
-%a_0 (t) = {2} \int^1 _0 \rho \, \omega(\rho,t) \, d\rho.
-%\end{equation}
-%and $r$ being the number of Bessel modes chosen to represent $\omega$.
-%\remark{I don't think you should need the constant term.  In fact, if $a_0$ is nonzero, then the expansion~\eqref{decomp} will not satisfy the boundary condition at $\rho=1$ (since $J_0(k_{0,n})=0$).  Why is $a_0$ included?}
-%
-%This Bessel decomposition is now applied on the simplified model defined by equation~(\ref{model0}). Figure~\ref{bessel1} compares the three model simulations, one is taken from TRANSP analysis of the experimental measurement of the toroidal rotation (with varying background), the two other models are simulated in real space dimension and spectrally by projecting the original model on only 4 Bessel modes respectively in a fixed background. It can be noticed that only 4 Bessel modes are sufficient for capturing most features of the dynamics.
-%
-%\begin{figure}
-%\includegraphics[width=\linewidth]{fig10} % bessel11n
-%\caption{comparison of spectral simulation of the toroidal rotation using 4 Bessel modes (right) with the full nonlinear simplified model using 60 points of discretization for plasma discharge 133367 (middle) in fixed background and the rotation from TRANSP analysis (left) in variable background.
-%\remark{Not sure we need this figure.  What does this show that is not already in Figure 9?  I thought the point is that this model was calibrated on shot 133743 and run for shot 133367, then should make that point explicitly.}}
-%\label{bessel1}
-%\end{figure}
-%
+
+
 \section{Linear plasma rotation control}
  \label{LRPC}
  
@@ -582,7 +530,6 @@ The outputs $y$ correspond to the sensor measurements of the plasma toroidal rot
 \subsection{Non-zero target state}
 Once the state-space realization is obtained, the goal is to force the shape of the plasma rotation profile to reach a target state $x_d$ such that the sensor output $y$ matches a reference signal~$y_d$. In the final implementation, all one should have to prescribe is $y_d$ (e.g., plasma rotational frequency values at certain locations). The target state $x_d$ and the corresponding input $u_d$ are found by solving equations~(\ref{eqn:state-space1}) and (\ref{eqn:state-space2}) at steady state ($\dot x = 0 = A x_d + B u_d$ and $y_d = C x_d$).
 %
-%Since the number of inputs equals the number of outputs ($p = q = 2$),
 We then solve for $x_d$ and $u_d$ by writing in matrix form
 \begin{equation}
 \left(\! \begin{array}{c}  x_{d} \\ u_{d}\end{array}\!\right)
@@ -590,8 +537,7 @@ We then solve for $x_d$ and $u_d$ by writing in matrix form
 \label{steadystate}
 \end{equation}
 Note that for this case, there is always a unique solution, since the number of inputs equals the number of outputs ($p = q = 2$), $A$ is invertible, and there are no transmission zeros at steady state.
-%and $\left( \bar{x}, \bar{u}  \right)$ is the equilibrium point around which the system is linearized, $\bar{y}$ the corresponding measurement values of $\bar{x} = \left( \bar{a}_{0},\, \bar{a}_{1},\ldots,\, \bar{a}_{r},\,\bar{T} \right)$. 
-%
+
  
 \subsection{Control design} 
 Once the target states $\left( x_{d} , u_{d} \right)$ are established, the controllers are designed based on the reduced model dynamics, then applied to the full-dimensional linearized model, and finally tested on the original nonlinear model to determine if the controller can suppress disturbances and reach the desired profile in the vicinity of the equilibrium.
@@ -634,7 +580,7 @@ Figure~\ref{fig:rot11} defines our initial profile, the equilibrium profile used
 In this paper we use $q=10^{4}$ and $R=I$ by inspection of the magnitude of our inputs and outputs.
 \begin{figure}
 	\centering
-\includegraphics{fig1010} % Goum133l
+\includegraphics{fig11}
 \caption{Rotation profiles: definition of the initial profile, equilibrium profile $w_0$ used for the linearization and the desired profiles to reach $w_d$. The measurement points $r$ are the intersections of the different profiles with the measurement channels}
 \label{fig:rot11}
 \end{figure}
@@ -692,7 +638,6 @@ which solves an algebraic Riccati equation with an extended state that includes 
 A drawback of integral control is that if the actuator values are limited to some range $u\in[u_\text{min},u_\text{max}]$ (as they are in our case), then the integrator can accumulate error when the actuator is ``saturated,'' resulting in poor transient performance, a phenomenon known as ``integrator windup.''  We avoid these effects by using a standard anti-windup scheme (see, e.g., \cite{AandM, Lewis}), in which one feeds back the difference between the desired value of~$u$ and its actual (possibly saturated) value, as shown in the diagram in Figure~\ref{fig:model1}.  
 
 Figure~\ref{fig:model1} shows the schematic of the overall controller, combining the feedback law~\eqref{eqn:ctrllaw_ff} with the observer~\eqref{obs}, the integrator~\eqref{integral} and the anti-windup approach described above. 
-%Because the actual state is the perturbed state, the steady state equilibrium input defined in Section~\ref{SS} by $\bar{u} = \left( \bar{I}^{2}, \   \bar{P} \right)$ has to be added to the actual input $u$ before entering the plant.
 
 \begin{figure*}
 \begin{tikzpicture}[x=0.75cm]
@@ -782,10 +727,10 @@ The discretized controller is first applied to the reduced-order model, consider
 
 \begin{figure}
 	\centering
-	\includegraphics{fig12a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em] % Goum18ln
-	\includegraphics{fig12b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em] % Goum18lln
-	\includegraphics{fig12c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em] % Goum18llln
-	\includegraphics{fig12d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)} % Goum18lllln
+	\includegraphics{fig13a}\adjustbox{raise=3.8em,lap=-7em}{$t = 0.50$\,s \ (a)} \\[-0.3em]
+	\includegraphics{fig13b}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.51$\,s \ (b)} \\[-0.3em]
+	\includegraphics{fig13c}\adjustbox{raise=6.8em,lap=-7em}{$t = 0.52$\,s \ (c)} \\[-0.3em]
+	\includegraphics{fig13d}\adjustbox{raise=9.7em,lap=-7em}{$t = 0.57$\,s \ (d)}
 	\caption{Time evolution of the rotation in the model as it evolves toward the target values and its estimate at 4 different times. The green profile is the targeted rotation profile. }
 	\label{fig:rot18}
 \end{figure}
@@ -794,7 +739,7 @@ The discretized controller is first applied to the reduced-order model, consider
 Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile, the desired profile, and the profile estimated by the observer.  Four different times are shown: $0.5$\,s (at which time the controller is turned on), $0.51$\,s, $0.52$\,s and $0.57$\,s respectively. The two sensors locations are indicated in the figure, and it can be noticed that the targeted profile is reached in less than $0.1$\,s.
 \begin{figure}
 \centering
-\includegraphics{fig13} % Goum20n
+\includegraphics{fig14}
 \caption{Time evolution of the rotation measurement at the two sensor points. The dashed lines represents the desired measurements at these latter locations. }
 \label{fig:rot20}
 \end{figure}    
@@ -802,8 +747,8 @@ Figure~\ref{fig:rot18} shows the rotation profile, comparing the actual profile,
 Figure~\ref{fig:rot20} shows the time evolution of the rotation measurement focused at the two sensor points located at the core and towards the edge of the plasma only. The outputs track the desired values well after about $50\,ms$. 
 \begin{figure}
 	\centering
-	\includegraphics{fig14a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)} % Goum19ln
-	\includegraphics{fig14b} \adjustbox{raise=4.8em,lap=-2.8em}{(b)}
+	\includegraphics{fig15a} \adjustbox{raise=7.4em,lap=-2.8em}{(a)}
+	\includegraphics{fig15b} \adjustbox{raise=4.8em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beam power and its saturation, needed to reach the 1st desired profile }
 	\label{fig:rot19}
 \end{figure} 
@@ -827,15 +772,15 @@ Durations greater and smaller than 10\,ms are chosen to compare output results f
   
 \begin{figure}
 	\centering
-	\includegraphics{fig15} % Goum14ln
+	\includegraphics{fig16}
 	\caption{Comparison of the rotation measurements when PWM is applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.015 s$).}
 	\label{fig:rot14}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{fig16a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum15ln
-	\includegraphics{fig16b} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
+	\includegraphics{fig17a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em]
+	\includegraphics{fig17b} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beam power (cycle time $0.015  s$).}
 	\label{fig:rot15}
 \end{figure}
@@ -853,15 +798,15 @@ The reduced-order model in both cases is very close to the TRANSP which again sh
 
 \begin{figure}
 	\centering
-	\includegraphics{fig17} % Goum16ln
+	\includegraphics{fig18}
 	\caption{Comparison of the rotation measurements when PWM applied for both the reduced-order model (green lines) and the TRANSP predictive model (blue lines). The red dots represents the cycle times (every $0.006 s$).}
 	\label{fig:rot16}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics{fig18a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
-	\includegraphics{fig18b} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
+	\includegraphics{fig19a} \adjustbox{raise=7.3em,lap=-2.8em}{(a)} \\[-0.5em]
+	\includegraphics{fig19b} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beam power (cycle time $0.006 s$). }
 	\label{fig:rot17}
 \end{figure}
@@ -872,7 +817,7 @@ The corresponding total beam power is represented in Figure~\ref{fig:rot2020}(b)
 
 \begin{figure}
 	\centering
-	\includegraphics{fig1919} % Goum16ln
+	\includegraphics{fig20}
 	\caption{The rotation measurements for the TRANSP predictive model (blue lines). The control is activated at $0.5s$.}
 	\label{fig:rot1919}
 \end{figure}
@@ -880,8 +825,8 @@ The corresponding total beam power is represented in Figure~\ref{fig:rot2020}(b)
 
 \begin{figure}
 	\centering
-	\includegraphics{fig2020} \adjustbox{raise=1.3em,lap=-2.8em}{(a)} \\[-0.5em] % Goum17ln
-	\includegraphics{fig2121} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
+	\includegraphics{fig21a} \adjustbox{raise=1.3em,lap=-2.8em}{(a)} \\[-0.5em]
+	\includegraphics{fig21b} \adjustbox{raise=4.2em,lap=-2.8em}{(b)}
 	\caption{Time evolution of the coil current and the overall beam power (cycle time $0.006 s$) for the third target. }
 	\label{fig:rot2020}
 \end{figure}
